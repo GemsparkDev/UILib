@@ -8,9 +8,8 @@ public class DummyWidget : FunctionalWidget
 {
     public DummyWidget()
     {
-        Size = Vector2.Zero;
         offset = Vector2.Zero;
-        texture = null;
+        Texture = null;
     }
     public override void Interact(Vector2 parentPosition) { }
     public override void ContinuousInteract(Vector2 parentPosition) { }

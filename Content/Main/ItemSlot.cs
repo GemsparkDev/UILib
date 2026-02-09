@@ -14,8 +14,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
     public readonly int id;
     public ItemSlot(Vector2 _offset, Texture2D _texture, UIManager _UIManager, int _id)
     {
-        texture = _texture;
-        Size = UIManager.DimsOf(_texture);
+        Texture = _texture;
         offset = _offset;
         daughterItem = default;
         UIManager = _UIManager;
@@ -23,8 +22,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
     }
     public ItemSlot(Vector2 _offset, Texture2D _texture, T _daughterItem, UIManager _UImanager, int _id)
     {
-        texture = _texture;
-        Size = UIManager.DimsOf(_texture);
+        Texture = _texture;
         offset = _offset;
         daughterItem = _daughterItem;
         UIManager = _UImanager;

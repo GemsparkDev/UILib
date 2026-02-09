@@ -9,11 +9,12 @@ public class Decal : Widget
     private SpriteFont textFont;
     private float textSize = 1f;
     public Color textColor;
+    private Vector2 size;
+    public override Vector2 Size => (size != default) ? size : base.Size;
     public Decal(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, string _text, Color _textColor, float _textSize)
     {
-        Size = UIManager.DimsOf(_texture);
         offset = _offset;
-        texture = _texture;
+        Texture = _texture;
         textFont = _textFont;
         text = _text;
         textColor = _textColor;
@@ -21,18 +22,17 @@ public class Decal : Widget
     }
     public Decal(Vector2 _offset, Texture2D _texture)
     {
-        Size = UIManager.DimsOf(_texture);
         offset = _offset;
-        texture = _texture;
+        Texture = _texture;
         text = null;
         textColor = Color.White;
 
     }
     public Decal(Vector2 _offset, SpriteFont _textFont, string _text, Color _textColor, float _textSize)
     {
-        Size = new Vector2(_text.Length * 4, 12) * textSize;
+        size = new Vector2(_text.Length * 4, 12) * textSize;
         offset = _offset;
-        texture = null;
+        Texture = null;
         textFont = _textFont;
         text = _text;
         textColor = _textColor;

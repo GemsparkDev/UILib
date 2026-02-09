@@ -18,9 +18,8 @@ public class Textbox : FunctionalWidget
     Keys[] prevState = [];
     public Textbox(Vector2 _offset, Texture2D _texture, SpriteFont _textFont)
     {
-        Size = UIManager.DimsOf(_texture);
         offset = _offset;
-        texture = _texture;
+        Texture = _texture;
         textFont = _textFont;
         text = "";
     }

@@ -13,18 +13,18 @@ public class Button : FunctionalWidget
     public Color textColor = Color.White;
     private Texture2D flipTexture;
     public Window Tooltip { get; private set; }
+    private Vector2 size;
+    public override Vector2 Size => (size != default) ? size : base.Size;
     public Button(Vector2 _offset, Texture2D _texture)
     {
-        Size = UIManager.DimsOf(_texture);
         offset = _offset;
-        texture = _texture;
+        Texture = _texture;
         text = null;
     }
     public Button(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, string _text, Color _textColor, Texture2D _flipTexture = null)
     {
-        Size = UIManager.DimsOf(_texture);
         offset = _offset;
-        texture = _texture;
+        Texture = _texture;
         textFont = _textFont;
         text = _text;
         textColor = _textColor;
@@ -32,9 +32,9 @@ public class Button : FunctionalWidget
     }
     public Button(Vector2 _offset, string _text, Color _textColor)
     {
-        Size = new Vector2(_text.Length * 4, 12);
+        size = new Vector2(_text.Length * 4, 12);
         offset = _offset;
-        texture = null;
+        Texture = null;
         text = _text;
         textColor = _textColor;
     }
@@ -43,7 +43,7 @@ public class Button : FunctionalWidget
         ApplyBehaviours();
         if (flipTexture != null)
         {
-            (texture, flipTexture) = (flipTexture, texture);
+            (Texture, flipTexture) = (flipTexture, Texture);
         }
     }
     public void AddTooltip(Window _tooltip)

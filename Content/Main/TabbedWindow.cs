@@ -104,8 +104,8 @@ public class TabbedWindow : Container
                     if (currentTab != i)
                     {
                         currentTab = i;
-                        tabList[prevTab].texture = tabTexture;
-                        tabList[currentTab].texture = selectedTabTexture;
+                        tabList[prevTab].Texture = tabTexture;
+                        tabList[currentTab].Texture = selectedTabTexture;
                         var sound = selectSound.CreateInstance();
                         sound.Volume = UIManager.SFXVolume;
                         sound.Play();
@@ -156,7 +156,7 @@ public class TabbedWindow : Container
     {
         for (int i = 0; i < totalTabs; i++)
         {
-            if (tabList[i].texture != null)
+            if (tabList[i].Texture != null)
             {
                 tabList[i].Draw(_spriteBatch, position, transparency, Center);
             }

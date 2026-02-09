@@ -12,12 +12,8 @@ public interface IData
     public Vector2 Size
     {
         get 
-        { 
-            if(Texture != null)
-            {
-                return UIManager.DimsOf(Texture);
-            }
-            return Vector2.Zero;
+        {
+            return (Texture != null) ? UIManager.DimsOf(Texture) : Vector2.Zero;
         }
     }
 }
