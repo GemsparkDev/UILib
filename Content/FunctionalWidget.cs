@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace UILib.Content.Main;
+namespace UILib.Content;
 
 public abstract class FunctionalWidget : Widget
 {

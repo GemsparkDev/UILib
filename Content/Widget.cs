@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace UILib.Content.Main;
+namespace UILib.Content;
 
 public abstract class Widget
 {
@@ -10,7 +10,7 @@ public abstract class Widget
     public string text;
     public Texture2D Texture { get; set; }
     public Vector2 Offset => offset * UIManager.UIScale;
-    public virtual Vector2 Size => (Texture != null) ? UIManager.DimsOf(Texture) : Vector2.Zero;
+    public virtual Vector2 Size => Texture != null ? UIManager.DimsOf(Texture) : Vector2.Zero;
     public virtual void Update() { }
     public virtual void Draw(SpriteBatch _spriteBatch, Vector2 _parentPositon, float _transparency, Vector2 _center)
     {

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 
-namespace UILib.Content.Main;
+namespace UILib.Content;
 public class Screen : Container
 {
     private List<(Widget widget, Alignment alignment)> children = [];

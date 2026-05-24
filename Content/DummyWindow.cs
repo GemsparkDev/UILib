@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace UILib.Content.Main;
+namespace UILib.Content;
 
 public class DummyWindow : Container
 {

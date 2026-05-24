@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
-namespace UILib.Content.Main;
+namespace UILib.Content;
 
 public abstract class Container
 {
@@ -46,7 +46,7 @@ public abstract class Container
     public virtual bool GetMouseOver()
     {
         Vector2 mousePosition = new(Mouse.GetState().X, Mouse.GetState().Y);
-        return (position.X <= mousePosition.X && mousePosition.X <= position.X + Size.X * UIManager.UIScale && position.Y <= mousePosition.Y && mousePosition.Y <= position.Y + Size.Y * UIManager.UIScale);
+        return position.X <= mousePosition.X && mousePosition.X <= position.X + Size.X * UIManager.UIScale && position.Y <= mousePosition.Y && mousePosition.Y <= position.Y + Size.Y * UIManager.UIScale;
     }
     public abstract FunctionalWidget GetWidgetOver();
     public virtual void Draw(SpriteBatch spriteBatch)

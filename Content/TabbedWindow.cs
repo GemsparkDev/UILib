@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework.Audio;
 
-namespace UILib.Content.Main;
+namespace UILib.Content;
 
 public class TabbedWindow : Container
 {
@@ -63,8 +63,8 @@ public class TabbedWindow : Container
     {
         Vector2 mousePosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y) + Center;
         Vector2 halfSize = Size / 2 * UIManager.UIScale;
-        return (position.X - halfSize.X <= mousePosition.X && mousePosition.X <= position.X + halfSize.X 
-             && position.Y - halfSize.Y - UIManager.DimsOf(tabTexture).Y * UIManager.UIScale <= mousePosition.Y && mousePosition.Y <= position.Y + halfSize.Y);
+        return position.X - halfSize.X <= mousePosition.X && mousePosition.X <= position.X + halfSize.X 
+             && position.Y - halfSize.Y - UIManager.DimsOf(tabTexture).Y * UIManager.UIScale <= mousePosition.Y && mousePosition.Y <= position.Y + halfSize.Y;
     }
     public override void Update()
     {
@@ -147,9 +147,9 @@ public class TabbedWindow : Container
             }
             if (i == currentTab)
             {
-                tabList[i]=(new Decal(tabOffset, selectedTabTexture));
+                tabList[i]=new Decal(tabOffset, selectedTabTexture);
             }
-            tabOffset.X += (UIManager.DimsOf(tabTexture).X + 4);
+            tabOffset.X += UIManager.DimsOf(tabTexture).X + 4;
         }
     }
     public override void Draw(SpriteBatch _spriteBatch)

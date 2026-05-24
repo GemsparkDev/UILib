@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace UILib.Content.Main;
+namespace UILib.Content;
 
 public class DummyWidget : FunctionalWidget
 {

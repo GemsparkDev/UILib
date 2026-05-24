@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 using Microsoft.Xna.Framework.Input;
 
-namespace UILib.Content.Main;
+namespace UILib.Content;
 
 public class Button : FunctionalWidget
 {

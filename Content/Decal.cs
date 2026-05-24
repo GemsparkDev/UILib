@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using UILib.Content.Main;
 
-namespace UILib.Content.Main;
+namespace UILib.Content;
 
 public class Decal : Widget
 {
@@ -10,7 +9,7 @@ public class Decal : Widget
     private float textSize = 1f;
     public Color textColor;
     private Vector2 size;
-    public override Vector2 Size => (size != default) ? size : base.Size;
+    public override Vector2 Size => size != default ? size : base.Size;
     public Decal(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, string _text, Color _textColor, float _textSize)
     {
         offset = _offset;

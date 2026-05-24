@@ -6,7 +6,7 @@ using System.Linq;
 using System;
 using System.Diagnostics;
 
-namespace UILib.Content.Main;
+namespace UILib.Content;
 public class UIManager
 {
     public static bool LockMouseInput { get; private set; } = false;
@@ -25,9 +25,9 @@ public class UIManager
     {
         //Sets the focused container to be the first container that is enabled and that the mouse is over
         //If there are no available containers, sets to either the screen menu or a dummy window depending on if the screen window is enabled
-        if(!LockMouseInput || (focusedContainer != null && focusedContainer.enabled == false))
+        if(!LockMouseInput || focusedContainer != null && focusedContainer.enabled == false)
         {
-            focusedContainer = containers.Where(c => c.enabled && c.GetMouseOver()).FirstOrDefault() ?? ((ScreenWindow != null && ScreenWindow.enabled) ? ScreenWindow : new DummyWindow());
+            focusedContainer = containers.Where(c => c.enabled && c.GetMouseOver()).FirstOrDefault() ?? (ScreenWindow != null && ScreenWindow.enabled ? ScreenWindow : new DummyWindow());
         }
 
         MouseState newState = Mouse.GetState();

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
-namespace UILib.Content.Main;
+namespace UILib.Content;
 
 public class Window : Container
 {
@@ -58,7 +58,7 @@ public class Window : Container
     {
         Vector2 mousePosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y) + Center;
         Vector2 halfSize = Size / 2 * UIManager.UIScale;
-        return (position.X - halfSize.X <= mousePosition.X && mousePosition.X <= position.X + halfSize.X && position.Y - halfSize.Y <= mousePosition.Y && mousePosition.Y <= position.Y + halfSize.Y);
+        return position.X - halfSize.X <= mousePosition.X && mousePosition.X <= position.X + halfSize.X && position.Y - halfSize.Y <= mousePosition.Y && mousePosition.Y <= position.Y + halfSize.Y;
     }
     public override void Draw(SpriteBatch _spriteBatch)
     {

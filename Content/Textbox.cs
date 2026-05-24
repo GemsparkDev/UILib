@@ -7,8 +7,7 @@ using Microsoft.Xna.Framework;
 using System.Text;
 using System.Threading.Tasks;
 
-
-namespace UILib.Content.Main;
+namespace UILib.Content;
 public class Textbox : FunctionalWidget
 {
     private List<Action> behaviours = [];
@@ -101,12 +100,12 @@ public class Textbox : FunctionalWidget
             {
                 text = text[0..^1];
             }
-            else if ((key is >= Keys.A and <= Keys.Z) && (text.Length < 20))
+            else if (key is >= Keys.A and <= Keys.Z && text.Length < 20)
             {
                 string c = key.ToString();
                 text += caps ? c.ToUpper() : c.ToLower();
             }
-            else if ((caps ? specialUppercase : keys).TryGetValue(key, out string c) && (text.Length < 20))
+            else if ((caps ? specialUppercase : keys).TryGetValue(key, out string c) && text.Length < 20)
             {
                 text += c;
             }
@@ -136,7 +135,7 @@ public class Textbox : FunctionalWidget
             return;
         }
         Vector2 textMiddlePoint = textFont.MeasureString(text) / 2;
-        Vector2 textPosition = (_parentPosition + Offset);
+        Vector2 textPosition = _parentPosition + Offset;
         float textSize = Size.X / (text.Length * 12);
         if (textSize > 1)
         {

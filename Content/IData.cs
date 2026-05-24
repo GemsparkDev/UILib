@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
-namespace UILib.Content.Main;
+namespace UILib.Content;
 
 public interface IData
 {
@@ -13,7 +13,7 @@ public interface IData
     {
         get 
         {
-            return (Texture != null) ? UIManager.DimsOf(Texture) : Vector2.Zero;
+            return Texture != null ? UIManager.DimsOf(Texture) : Vector2.Zero;
         }
     }
 }
