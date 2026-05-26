@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace UILib.Content;
 
@@ -70,11 +71,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
     }
     public override void HoveringDraw(SpriteBatch _spriteBatch) 
     {
-        if (daughterItem == null)
-        {
-            return;
-        }
-        if (daughterItem.Tooltip == null)
+        if (daughterItem == null || daughterItem.Tooltip == null)
         {
             return;
         }
