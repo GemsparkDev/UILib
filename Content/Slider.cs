@@ -30,6 +30,7 @@ public class Slider : FunctionalWidget
         offset = _offset;
         visualSlider = _visualSlider;
         Colors = _colors;
+        Intervals = new float[_colors.Length - 1];
     }
     public Slider(Texture2D _line, Texture2D _knob, Vector2 _offset, Vector2 _sliderSize, bool _visualSlider, Color[] _colors)
     {
@@ -44,6 +45,7 @@ public class Slider : FunctionalWidget
         offset = _offset;
         visualSlider = _visualSlider;
         Colors = _colors;
+        Intervals = new float[_colors.Length - 1];
     }
     public void SetInterval(float _value, float _maxValue, int _index = 0)
     {
