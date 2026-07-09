@@ -4,30 +4,32 @@ using System.Collections.Generic;
 using System;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
+using System.Linq;
 
 namespace UILib.Content;
 
 public class ItemSlot<T> : FunctionalWidget where T : class, IData
 {
-    public T daughterItem;
+    public T daughterItem = default;
     private UIManager UIManager;
     private List<Action> behaviours = [];
-    public readonly int id;
+    public readonly List<int> ids;
     public ItemSlot(Vector2 _offset, Texture2D _texture, UIManager _UIManager, int _id)
     {
         Texture = _texture;
         offset = _offset;
-        daughterItem = default;
         UIManager = _UIManager;
-        id = _id;
+        if(_id != -1)
+        {
+            ids = [_id];
+        }
     }
-    public ItemSlot(Vector2 _offset, Texture2D _texture, T _daughterItem, UIManager _UImanager, int _id)
+    public ItemSlot(Vector2 _offset, Texture2D _texture, UIManager _UImanager, List<int> _ids)
     {
         Texture = _texture;
         offset = _offset;
-        daughterItem = _daughterItem;
         UIManager = _UImanager;
-        id = _id;
+        ids = _ids;
     }
     public override void Interact(Vector2 parentPosition)
     {
@@ -35,7 +37,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
         {
             (daughterItem, UIManager.selectedIcon) = (null, daughterItem);
         }
-        else if(id == UIManager.selectedIcon.ID || id == -1)
+        else if(ids == null || ids.Contains(UIManager.selectedIcon.ID))
         {
             if (UIManager.selectedIcon as T == null)
             {
