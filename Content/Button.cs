@@ -10,7 +10,7 @@ public class Button : FunctionalWidget
 {
     private List<Action> behaviours = [];
     private SpriteFont textFont;
-    public Color textColor = Color.White;
+    public Color TextColor { get; set; } = Color.White;
     private float textSize = 10f;
     private Texture2D flipTexture;
     public Window Tooltip { get; private set; }
@@ -28,7 +28,7 @@ public class Button : FunctionalWidget
         Texture = _texture;
         textFont = _textFont;
         text = _text;
-        textColor = _textColor;
+        TextColor = _textColor;
         flipTexture = _flipTexture;
     }
     public Button(Vector2 _offset, SpriteFont _textFont, string _text, Color _textColor, float textSize)
@@ -39,7 +39,7 @@ public class Button : FunctionalWidget
         textFont = _textFont;
         Texture = null;
         text = _text;
-        textColor = _textColor;
+        TextColor = _textColor;
     }
     public override void Interact(Vector2 parentPosition)
     {
@@ -77,7 +77,7 @@ public class Button : FunctionalWidget
             {
                 textSize = 1;
             }
-            _spriteBatch.DrawString(textFont, text, textPosition - _center, textColor, 0, textMiddlePoint, textSize * UIManager.UIScale * this.textSize / 10, SpriteEffects.None, 0.45f);
+            _spriteBatch.DrawString(textFont, text, textPosition - _center, TextColor, 0, textMiddlePoint, textSize * UIManager.UIScale * this.textSize / 10, SpriteEffects.None, 0.45f);
         }
     }
     public override void HoveringDraw(SpriteBatch _spriteBatch) 
