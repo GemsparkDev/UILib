@@ -79,7 +79,7 @@ public class Slider : FunctionalWidget
     public override void Draw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center)
     {
         _spriteBatch.Draw(Texture, _parentPosition + Offset - _center, new Rectangle(0, 0, (int)sliderSize.X, (int)sliderSize.Y),
-    Colors[^1], 0, sliderSize / 2, UIManager.UIScale, 0, 0);
+            Colors[^1], 0, sliderSize / 2, UIManager.UIScale, 0, 0);
         for (int i = Intervals.Length - 1; i >= 0; i--)
         {
             //_spriteBatch.Draw(texture, _parentPositon + Offset, null, color * _transparency, 0, Size/2, UIManager.UIScale, 0, 0);
