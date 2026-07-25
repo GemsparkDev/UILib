@@ -19,5 +19,5 @@ public abstract class Widget
             _spriteBatch.Draw(Texture, _parentPositon + Offset - _center, null, color * _transparency, 0, Size / 2, UIManager.UIScale, 0, 0);
         }
     }
-    public abstract void HoveringDraw(SpriteBatch _spriteBatch);
+    public abstract void HoveringDraw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center);
 }

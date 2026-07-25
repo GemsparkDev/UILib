@@ -200,7 +200,7 @@ public class TabbedWindow : Container
         }
         if (GetWidgetOver() != null)
         {
-            (GetWidgetOver() as Widget).HoveringDraw(_spriteBatch);
+            (GetWidgetOver() as Widget).HoveringDraw(_spriteBatch, position, transparency, Center);
         }
     }
 }

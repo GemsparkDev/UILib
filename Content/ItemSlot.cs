@@ -71,7 +71,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
         }
         _spriteBatch.Draw(daughterItem.Texture, _parentPosition + Offset - _center, null, daughterItem.Color, 0, daughterItem.Size / 2, UIManager.UIScale, SpriteEffects.None, 0);
     }
-    public override void HoveringDraw(SpriteBatch _spriteBatch) 
+    public override void HoveringDraw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center) 
     {
         if (daughterItem == null || daughterItem.Tooltip == null)
         {

@@ -74,7 +74,7 @@ public class Window : Container
                 widget.Draw(_spriteBatch, position, transparency, Center);
             }
         }
-        GetWidgetOver()?.HoveringDraw(_spriteBatch);
+        GetWidgetOver()?.HoveringDraw(_spriteBatch, position, transparency, Center);
     }
     public override void AddWidget(Widget widget, int index = 0)
     {

@@ -16,5 +16,5 @@ public class DummyWidget : FunctionalWidget
     public override void AddBehaviour(Action func) { }
     public override void ApplyBehaviours() { }
     public override void Draw(SpriteBatch _spriteBatch, Vector2 _parentPositon, float _transparency, Vector2 _center) { }
-    public override void HoveringDraw(SpriteBatch _spriteBatch) { }
+    public override void HoveringDraw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center) { }
 }

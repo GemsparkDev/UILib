@@ -47,5 +47,5 @@ public class Decal : Widget
             _spriteBatch.DrawString(textFont, text, textPosition - _center, textColor, 0, textMiddlePoint, UIManager.UIScale * textSize / 10, SpriteEffects.None, 0.45f);
         }
     }
-    public override void HoveringDraw(SpriteBatch _spriteBatch) { }
+    public override void HoveringDraw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center) { }
 }

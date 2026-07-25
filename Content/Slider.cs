@@ -12,7 +12,7 @@ public class Slider : FunctionalWidget
     private List<Action> behaviours = [];
     private Texture2D knob;
     public float[] Intervals { get; set; } = [0];
-    private Vector2 sliderSize;
+    protected Vector2 sliderSize;
     public bool visualSlider;
     public Color[] Colors { get; set; }
     private Vector2 size;
@@ -92,5 +92,5 @@ public class Slider : FunctionalWidget
             _spriteBatch.Draw(knob, knobPosition, null, Color.White, 0, UIManager.DimsOf(knob) / 2, UIManager.UIScale / 2, 0, 0);
         }
     }
-    public override void HoveringDraw(SpriteBatch _spriteBatch) { }
+    public override void HoveringDraw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center) { }
 }
