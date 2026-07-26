@@ -81,6 +81,7 @@ public class Screen : Container
             var widget = widgetPair.widget as Widget;
             widget.Draw(spriteBatch, position, 1, WidgetOrigin(widget, widgetPair.alignment));
         }
+        GetWidgetOver()?.HoveringDraw(spriteBatch, position, transparency, Center);
     }
     public override Vector2 WidgetOrigin(Widget _widget)
     {
