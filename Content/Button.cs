@@ -53,7 +53,7 @@ public class Button : FunctionalWidget
     {
         Tooltip ??= _tooltip;
     }
-    public override void ContinuousInteract(Vector2 parentPosition) { }
+    public override void ContinuousInteract(Vector2 parentPosition) { base.ContinuousInteract(parentPosition); }
     public override void AddBehaviour(Action func)
     {
         behaviours.Add(func);

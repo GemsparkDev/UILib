@@ -64,6 +64,7 @@ public class Slider : FunctionalWidget
         }
         SetInterval(Mouse.GetState().X - Offset.X - parentPosition.X + sliderSize.X * UIManager.UIScale / 2, sliderSize.X * UIManager.UIScale);
         ApplyBehaviours();
+        base.ContinuousInteract(parentPosition);
     }
     public override void AddBehaviour(Action func)
     {

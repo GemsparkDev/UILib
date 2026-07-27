@@ -19,6 +19,11 @@ public class UIManager
     public static float SFXVolume { get { return sfxVolume; } set { sfxVolume = Math.Clamp(value, 0, 1); } }
     public IData selectedIcon;
     public static float UIScale { get; set; } = 2f;
+    public static UIManager Self { get; private set; }
+    public UIManager()
+    {
+        Self = this;
+    }
     public void Update()
     {
         //Sets the focused container to be the first container that is enabled and that the mouse is over
