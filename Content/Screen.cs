@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace UILib.Content;
 public class Screen : Container
@@ -81,7 +82,12 @@ public class Screen : Container
             var widget = widgetPair.widget as Widget;
             widget.Draw(spriteBatch, position, 1, WidgetOrigin(widget, widgetPair.alignment));
         }
-        GetWidgetOver()?.HoveringDraw(spriteBatch, position, transparency, Center);
+        var w = GetWidgetOver();
+        if(w != null && w is not DummyWidget)
+        {
+            var alignment = functionalChildren.First(x => x.widget == w).alignment;
+            w.HoveringDraw(spriteBatch, position, 1, WidgetOrigin(w, alignment));
+        }
     }
     public override Vector2 WidgetOrigin(Widget _widget)
     {
