@@ -62,7 +62,7 @@ public class Slider : FunctionalWidget
         {
             return;
         }
-        SetInterval(Mouse.GetState().X - Offset.X - parentPosition.X + sliderSize.X * UIManager.UIScale / 2, sliderSize.X * UIManager.UIScale);
+        SetInterval(Mouse.GetState().X - Offset.X + parentPosition.X + sliderSize.X * UIManager.UIScale / 2, sliderSize.X * UIManager.UIScale);
         ApplyBehaviours();
         base.ContinuousInteract(parentPosition);
     }

@@ -64,7 +64,7 @@ public class Screen : Container
         }
         foreach (var child in functionalChildren)
         {
-            (child.widget as Widget).Update();
+            child.widget.Update();
         }
     }
     public override void Draw(SpriteBatch spriteBatch)

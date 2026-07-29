@@ -20,10 +20,7 @@ public class UIManager
     public IData selectedIcon;
     public static float UIScale { get; set; } = 2f;
     public static UIManager Self { get; private set; }
-    public UIManager()
-    {
-        Self = this;
-    }
+    public UIManager() => Self = this;
     public void Update()
     {
         //Sets the focused container to be the first container that is enabled and that the mouse is over
@@ -36,7 +33,8 @@ public class UIManager
         {
             widget.Interact(focusedContainer.WidgetOrigin(widget));
         }
-        if (newState.LeftButton == ButtonState.Pressed)
+        //TODO: Make it so continuous interaction always goes after interacting with something, even when the cursor is off.
+        if (oldState.LeftButton == ButtonState.Pressed) //oldState allows for falling edge conditionals
         {
             widget.ContinuousInteract(focusedContainer.WidgetOrigin(widget));
         }
