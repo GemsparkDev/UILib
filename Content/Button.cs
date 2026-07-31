@@ -72,7 +72,7 @@ public class Button : FunctionalWidget
         {
             Vector2 textMiddlePoint = textFont.MeasureString(text) / 2;
             Vector2 textPosition = (_parentPosition + Offset);
-            float textSize = Size.X/(text.Length * 12);
+            float textSize = Size.X/(text.Length * 10);
             if(textSize > 1)
             {
                 textSize = 1;
