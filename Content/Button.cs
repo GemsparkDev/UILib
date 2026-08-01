@@ -71,13 +71,13 @@ public class Button : FunctionalWidget
         if (text != null)
         {
             Vector2 textMiddlePoint = textFont.MeasureString(text) / 2;
-            Vector2 textPosition = (_parentPosition + Offset);
             float textSize = Size.X/(text.Length * 10);
             if(textSize > 1)
             {
                 textSize = 1;
             }
-            _spriteBatch.DrawString(textFont, text, textPosition - _center, TextColor, 0, textMiddlePoint, textSize * UIManager.UIScale * this.textSize / 10, SpriteEffects.None, 0.45f);
+            _spriteBatch.DrawString(textFont, text, _parentPosition + Offset - _center, TextColor, 0, textMiddlePoint, textSize * UIManager.UIScale * this.textSize / 10, 0, 0);
+            Debug.WriteLine(_parentPosition + Offset - _center);
         }
     }
     public override void HoveringDraw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center) 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace UILib.Content;
 
@@ -43,8 +44,8 @@ public class Decal : Widget
         if (text != null)
         {
             Vector2 textMiddlePoint = textFont.MeasureString(text) / 2;
-            Vector2 textPosition = _parentPosition + Offset;
-            _spriteBatch.DrawString(textFont, text, textPosition - _center, textColor, 0, textMiddlePoint, UIManager.UIScale * textSize / 10, SpriteEffects.None, 0.45f);
+            _spriteBatch.DrawString(textFont, text, _parentPosition + Offset - _center, textColor, 0, textMiddlePoint, UIManager.UIScale * textSize / 10, 0, 0);
+            Debug.WriteLine(_parentPosition + Offset - _center);
         }
     }
     public override void HoveringDraw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center) { }
