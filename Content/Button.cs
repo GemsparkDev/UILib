@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace UILib.Content;
 
@@ -20,25 +21,25 @@ public class Button : FunctionalWidget
     {
         offset = _offset;
         Texture = _texture;
-        text = null;
+        Text {get; set;} = null;
     }
     public Button(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, string _text, Color _textColor, Texture2D _flipTexture = null)
     {
         offset = _offset;
         Texture = _texture;
         textFont = _textFont;
-        text = _text;
+        Text {get; set;} = _text;
         TextColor = _textColor;
         flipTexture = _flipTexture;
     }
-    public Button(Vector2 _offset, SpriteFont _textFont, string _text, Color _textColor, float textSize)
+    public Button(Vector2 _offset, SpriteFont _textFont, string _text, Color _textColor, float _textSize)
     {
         size = _textFont.MeasureString(_text) * new Vector2(1, 0.5f);
-        this.textSize = textSize;
+        textSize = _textSize;
         offset = _offset;
         textFont = _textFont;
         Texture = null;
-        text = _text;
+        Text {get; set;} = _text;
         TextColor = _textColor;
     }
     public override void Interact(Vector2 parentPosition)
@@ -68,16 +69,19 @@ public class Button : FunctionalWidget
     public override void Draw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center)
     {
         base.Draw(_spriteBatch, _parentPosition, _transparency, _center);
-        if (text != null)
+        if (Text {get; set;} != null)
         {
-            Vector2 textMiddlePoint = textFont.MeasureString(text) / 2;
-            float textSize = Size.X/(text.Length * 10);
+            Vector2 textMiddlePoint = textFont.MeasureString(Text {get; set;}) / 2;
+            float textSize = Size.X/(Text {get; set;}.Length * 10);
             if(textSize > 1)
             {
                 textSize = 1;
             }
-            _spriteBatch.DrawString(textFont, text, _parentPosition + Offset - _center, TextColor, 0, textMiddlePoint, textSize * UIManager.UIScale * this.textSize / 10, 0, 0);
-            Debug.WriteLine(_parentPosition + Offset - _center);
+            _spriteBatch.DrawString(textFont, Text {get; set;}, _parentPosition + Offset - _center, TextColor, 0, textMiddlePoint, textSize * UIManager.UIScale * this.textSize / 10, 0, 0);
+            if(Text {get; set;} == "Next")
+            {
+                Debug.WriteLine($"Button: {Size.Y}");
+            }
         }
     }
     public override void HoveringDraw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center) 

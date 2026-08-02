@@ -7,7 +7,7 @@ public abstract class Widget
 {
     public Color color = Color.White;
     protected Vector2 offset;
-    public string text;
+    public string Text {get; set;}
     public Texture2D Texture { get; set; }
     public Vector2 Offset => offset * UIManager.UIScale;
     public virtual Vector2 Size => Texture != null ? UIManager.DimsOf(Texture) : Vector2.Zero;
