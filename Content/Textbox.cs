@@ -20,7 +20,7 @@ public class Textbox : FunctionalWidget
         offset = _offset;
         Texture = _texture;
         textFont = _textFont;
-        Text {get; set;} = "";
+        Text = "";
     }
     public override void Interact(Vector2 parentPosition)
     {
@@ -96,18 +96,18 @@ public class Textbox : FunctionalWidget
             {
                 continue;
             }
-            if (key == Keys.Back && Text {get; set;}.Length > 0)
+            if (key == Keys.Back && Text.Length > 0)
             {
-                Text {get; set;} = Text {get; set;}[0..^1];
+                Text = Text[0..^1];
             }
-            else if (key is >= Keys.A and <= Keys.Z && Text {get; set;}.Length < 20)
+            else if (key is >= Keys.A and <= Keys.Z && Text.Length < 20)
             {
                 string c = key.ToString();
-                Text {get; set;} += caps ? c.ToUpper() : c.ToLower();
+                Text += caps ? c.ToUpper() : c.ToLower();
             }
-            else if ((caps ? specialUppercase : keys).TryGetValue(key, out string c) && Text {get; set;}.Length < 20)
+            else if ((caps ? specialUppercase : keys).TryGetValue(key, out string c) && Text.Length < 20)
             {
-                Text {get; set;} += c;
+                Text += c;
             }
         }
         if (input.Length > 0)
@@ -130,18 +130,18 @@ public class Textbox : FunctionalWidget
     public override void Draw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center)
     {
         base.Draw(_spriteBatch, _parentPosition, _transparency, _center);
-        if (Text {get; set;} == "")
+        if (Text == "")
         {
             return;
         }
-        Vector2 textMiddlePoint = textFont.MeasureString(Text {get; set;}) / 2;
+        Vector2 textMiddlePoint = textFont.MeasureString(Text) / 2;
         Vector2 textPosition = _parentPosition + Offset;
-        float textSize = Size.X / (Text {get; set;}.Length * 12);
+        float textSize = Size.X / (Text.Length * 12);
         if (textSize > 1)
         {
             textSize = 1;
         }
-        _spriteBatch.DrawString(textFont, Text {get; set;}, textPosition - _center, textColor, 0, textMiddlePoint, textSize * UIManager.UIScale, SpriteEffects.None, 0.45f);
+        _spriteBatch.DrawString(textFont, Text, textPosition - _center, textColor, 0, textMiddlePoint, textSize * UIManager.UIScale, SpriteEffects.None, 0.45f);
     }
     public override void HoveringDraw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center) { }
 }

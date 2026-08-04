@@ -21,14 +21,14 @@ public class Button : FunctionalWidget
     {
         offset = _offset;
         Texture = _texture;
-        Text {get; set;} = null;
+        Text = null;
     }
     public Button(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, string _text, Color _textColor, Texture2D _flipTexture = null)
     {
         offset = _offset;
         Texture = _texture;
         textFont = _textFont;
-        Text {get; set;} = _text;
+        Text = _text;
         TextColor = _textColor;
         flipTexture = _flipTexture;
     }
@@ -39,7 +39,7 @@ public class Button : FunctionalWidget
         offset = _offset;
         textFont = _textFont;
         Texture = null;
-        Text {get; set;} = _text;
+        Text = _text;
         TextColor = _textColor;
     }
     public override void Interact(Vector2 parentPosition)
@@ -69,16 +69,16 @@ public class Button : FunctionalWidget
     public override void Draw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center)
     {
         base.Draw(_spriteBatch, _parentPosition, _transparency, _center);
-        if (Text {get; set;} != null)
+        if (Text != null)
         {
-            Vector2 textMiddlePoint = textFont.MeasureString(Text {get; set;}) / 2;
-            float textSize = Size.X/(Text {get; set;}.Length * 10);
+            Vector2 textMiddlePoint = textFont.MeasureString(Text ) / 2;
+            float textSize = Size.X/(Text .Length * 10);
             if(textSize > 1)
             {
                 textSize = 1;
             }
-            _spriteBatch.DrawString(textFont, Text {get; set;}, _parentPosition + Offset - _center, TextColor, 0, textMiddlePoint, textSize * UIManager.UIScale * this.textSize / 10, 0, 0);
-            if(Text {get; set;} == "Next")
+            _spriteBatch.DrawString(textFont, Text, _parentPosition + Offset - _center, TextColor, 0, textMiddlePoint, textSize * UIManager.UIScale * this.textSize / 10, 0, 0);
+            if(Text == "Next")
             {
                 Debug.WriteLine($"Button: {Size.Y}");
             }

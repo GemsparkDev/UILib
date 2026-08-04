@@ -77,13 +77,12 @@ public class Screen : Container
         {
             widget.widget.Draw(spriteBatch, position, 1, WidgetOrigin(widget.widget, widget.alignment));
         }
-        foreach (var widgetPair in functionalChildren)
+        foreach (var widget in functionalChildren)
         {
-            var widget = widgetPair.widget as Widget;
-            widget.Draw(spriteBatch, position, 1, WidgetOrigin(widget, widgetPair.alignment));
+            widget.widget.Draw(spriteBatch, position, 1, WidgetOrigin(widget.widget, widget.alignment));
         }
         var w = GetWidgetOver();
-        if(w != null && w is not DummyWidget)
+        if(w is not null and not DummyWidget)
         {
             var alignment = functionalChildren.First(x => x.widget == w).alignment;
             w.HoveringDraw(spriteBatch, position, 1, WidgetOrigin(w, alignment));
