@@ -19,6 +19,7 @@ public class Decal : Widget
         Text = _text;
         textColor = _textColor;
         textSize = _textSize;
+        size = UIManager.DimsOf(_texture);
     }
     public Decal(Vector2 _offset, Texture2D _texture)
     {
@@ -26,6 +27,7 @@ public class Decal : Widget
         Texture = _texture;
         Text = null;
         textColor = Color.White;
+        size = UIManager.DimsOf(_texture);
     }
     public Decal(Vector2 _offset, SpriteFont _textFont, string _text, Color _textColor, float _textSize)
     {
@@ -46,7 +48,7 @@ public class Decal : Widget
             _spriteBatch.DrawString(textFont, Text, _parentPosition + Offset - _center, textColor, 0, textMiddlePoint, UIManager.UIScale * textSize / 10, 0, 0);
             if (Text == "Borderless Window")
             {
-                Debug.WriteLine($"Decal: {Size.Y}");
+                //Debug.WriteLine($"Decal: {Size.Y}");
             }
         }
     }

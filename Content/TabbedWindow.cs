@@ -164,14 +164,14 @@ public class TabbedWindow : Container
             {
                 if (icons[i] != null)
                 {
-                    Vector2 placementPosition; 
+                    Vector2 placementPosition = position + tabList[i].Offset; 
                     if(i == currentTab)
                     {
-                        placementPosition = position + tabList[i].Offset + new Vector2(-icons[i].Width / 2 * UIManager.UIScale, -icons[i].Height / 4 * UIManager.UIScale);
+                        placementPosition += new Vector2(-icons[i].Width / 2 * UIManager.UIScale, -icons[i].Height / 4 * UIManager.UIScale);
                     }
                     else
                     {
-                        placementPosition = position + tabList[i].Offset + new Vector2(-icons[i].Width / 2 * UIManager.UIScale, icons[i].Height / 4 * UIManager.UIScale);
+                        placementPosition += new Vector2(-icons[i].Width / 2 * UIManager.UIScale, icons[i].Height / 4 * UIManager.UIScale);
                     }
                     _spriteBatch.Draw(icons[i], placementPosition - Center, null, Color.White * transparency, 0, Vector2.Zero, UIManager.UIScale, SpriteEffects.None, 0.4f);
                 }
