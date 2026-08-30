@@ -72,7 +72,7 @@ public class Button : FunctionalWidget
         if (Text != null)
         {
             Vector2 textMiddlePoint = textFont.MeasureString(Text ) / 2;
-            float textSize = Size.X/(Text .Length * 10);
+            float textSize = Size.X/(Text.Length * 10);
             if(textSize > 1)
             {
                 textSize = 1;
@@ -86,6 +86,7 @@ public class Button : FunctionalWidget
     }
     public override void HoveringDraw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center) 
     {
+        base.HoveringDraw(_spriteBatch, _parentPosition, _transparency, _center);
         if (Tooltip == null)
         {
             return;
