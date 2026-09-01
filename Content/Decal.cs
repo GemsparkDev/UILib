@@ -9,8 +9,8 @@ public class Decal : Widget
     private SpriteFont textFont;
     private float textSize = 10f;
     public Color textColor;
-    private Vector2 size;
-    public override Vector2 Size => size;
+    private Vector2 size = Vector2.Zero;
+    public override Vector2 Size => (size == Vector2.Zero && Texture != null) ? UIManager.DimsOf(Texture) : size;
     public Decal(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, string _text, Color _textColor, float _textSize)
     {
         offset = _offset;
