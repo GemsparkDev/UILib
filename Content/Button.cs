@@ -78,10 +78,6 @@ public class Button : FunctionalWidget
                 textSize = 1;
             }
             _spriteBatch.DrawString(textFont, Text, _parentPosition + Offset - _center, TextColor, 0, textMiddlePoint, textSize * UIManager.UIScale * this.textSize / 10, 0, 0);
-            if(Text == "Next")
-            {
-                Debug.WriteLine($"Button: {Size.Y}");
-            }
         }
     }
     public override void HoveringDraw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center) 
