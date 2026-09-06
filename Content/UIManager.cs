@@ -9,7 +9,8 @@ using System.Diagnostics;
 namespace UILib.Content;
 public class UIManager
 {
-    public static Vector2 BackBuffer { get; set; }
+    private static Func<Vector2> backBuffer;
+    public static Vector2 BackBuffer => backBuffer();
 
     private MouseState oldState;
     private readonly List<Container> containers = [];
@@ -20,7 +21,11 @@ public class UIManager
     public IData selectedIcon;
     public static float UIScale { get; set; } = 2f;
     public static UIManager Self { get; private set; }
-    public UIManager() => Self = this;
+    public UIManager(Func<Vector2> _backBuffer)
+    {
+        Self = this;
+        backBuffer = _backBuffer;
+    }
     public void Update()
     {
         //Sets the focused container to be the first container that is enabled and that the mouse is over
