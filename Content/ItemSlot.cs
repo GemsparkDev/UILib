@@ -65,7 +65,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
     public override void Draw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center)
     {
         base.Draw(_spriteBatch, _parentPosition, _transparency, _center);
-        if (daughterItem == null)
+        if (daughterItem == null || daughterItem.Texture == null)
         {
             return;
         }

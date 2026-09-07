@@ -88,7 +88,7 @@ public class UIManager
         {
             container.Draw(spriteBatch);
         }
-        if (selectedIcon != null)
+        if (selectedIcon != null && selectedIcon.Texture != null)
         {
             spriteBatch.Draw(selectedIcon.Texture, new Vector2(Mouse.GetState().X, Mouse.GetState().Y), null, selectedIcon.Color, 0, DimsOf(selectedIcon.Texture) / 2, UIScale, SpriteEffects.None, 0.35f);
         }
