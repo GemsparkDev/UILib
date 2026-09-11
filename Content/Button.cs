@@ -14,6 +14,16 @@ public class Button : FunctionalWidget
     public Color TextColor { get; set; } = Color.White;
     private float textSize = 10f;
     private Texture2D flipTexture;
+    private string text = "";
+    public override string Text { get => text; 
+        set 
+        {
+            text = value;
+            if (Texture == null)
+            {
+                size = textFont.MeasureString(text) * new Vector2(1, 0.5f);
+            }
+        } }
     public Window Tooltip { get; private set; }
     private Vector2 size;
     public override Vector2 Size => (size != default) ? size : base.Size;
