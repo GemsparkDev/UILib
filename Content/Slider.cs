@@ -62,7 +62,10 @@ public class Slider : FunctionalWidget
         {
             return;
         }
-        SetInterval(Mouse.GetState().X - Offset.X - parentPosition.X + sliderSize.X * UIManager.UIScale / 2, sliderSize.X * UIManager.UIScale);
+        //TODO: Fix this math to be simpler
+        float x1 = (UIManager.UIScale - 2);
+        float x2 = (UIManager.UIScale - 1.5f);
+        SetInterval((Mouse.GetState().X - Offset.X - parentPosition.X + sliderSize.X * UIManager.UIScale / 2) / sliderSize.X / UIManager.UIScale - (2 - UIManager.UIScale) - x1 * x1 / 2 + 0.125f - x2 * x2 * 0.5f, 1);
         ApplyBehaviours();
         base.ContinuousInteract(parentPosition);
     }
