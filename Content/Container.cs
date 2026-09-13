@@ -42,7 +42,7 @@ public abstract class Container
     }
     public abstract Vector2 WidgetOrigin(Widget _widget);
     public abstract void Update();
-    protected Vector2 Center => (Origin - Size / 2) * UIManager.UIScale;
+    public Vector2 Center => (Origin - Size / 2) * UIManager.UIScale;
     public virtual bool GetMouseOver()
     {
         Vector2 mousePosition = new(Mouse.GetState().X, Mouse.GetState().Y);

@@ -34,14 +34,15 @@ public class UIManager
 
         MouseState newState = Mouse.GetState();
         FunctionalWidget widget = focusedContainer.GetWidgetOver();
+        Vector2 clickLocation = 2 * (new Vector2(Mouse.GetState().X, Mouse.GetState().Y) - focusedContainer.position + focusedContainer.Center - widget.Offset) / (widget.Size * UIScale);
         if (oldState.LeftButton == ButtonState.Pressed && newState.LeftButton == ButtonState.Released)
         {
-            widget.Interact(focusedContainer.WidgetOrigin(widget));
+            widget.Interact(clickLocation);
         }
         //TODO: Make it so continuous interaction always goes after interacting with something, even when the cursor is off.
         if (oldState.LeftButton == ButtonState.Pressed) //oldState allows for falling edge conditionals
         {
-            widget.ContinuousInteract(focusedContainer.WidgetOrigin(widget));
+            widget.ContinuousInteract(clickLocation);
         }
         focusedContainer.Update();
         oldState = newState;
@@ -80,7 +81,7 @@ public class UIManager
     }
     public void Draw(SpriteBatch spriteBatch)
     {
-        if(ScreenWindow != null && ScreenWindow.enabled)
+        if (ScreenWindow != null && ScreenWindow.enabled)
         {
             ScreenWindow.Draw(spriteBatch);
         }

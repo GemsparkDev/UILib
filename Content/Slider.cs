@@ -56,18 +56,16 @@ public class Slider : FunctionalWidget
         Intervals[_index] = Math.Clamp(_value/_maxValue, 0, 1);
     }
     public override void Interact(Vector2 parentPosition) { }
-    public override void ContinuousInteract(Vector2 parentPosition)
+    public override void ContinuousInteract(Vector2 clickPosition)
     {
         if (visualSlider)
         {
             return;
         }
-        //TODO: Fix this math to be simpler
-        float x1 = (UIManager.UIScale - 2);
-        float x2 = (UIManager.UIScale - 1.5f);
-        SetInterval((Mouse.GetState().X - Offset.X - parentPosition.X + sliderSize.X * UIManager.UIScale / 2) / sliderSize.X / UIManager.UIScale - (2 - UIManager.UIScale) - x1 * x1 / 2 + 0.125f - x2 * x2 * 0.5f, 1);
+        //Adds a multiplier to subtract the added 8 pixel buffer zone
+        SetInterval(clickPosition.X * (size.X)/(size.X-8) + 1, 2);
         ApplyBehaviours();
-        base.ContinuousInteract(parentPosition);
+        base.ContinuousInteract(clickPosition);
     }
     public override void AddBehaviour(Action func)
     {

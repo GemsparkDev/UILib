@@ -18,7 +18,7 @@ public class Window : Container
     }
     public override Vector2 WidgetOrigin(Widget _widget)
     {
-        return position - Origin * 2 + Size;
+        return position - Origin + Size / 2;
     }
     public override FunctionalWidget GetWidgetOver()
     {
