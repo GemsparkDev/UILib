@@ -16,6 +16,7 @@ public class UIManager
     private readonly List<Container> containers = [];
     public Screen ScreenWindow { get; set; }
     public Container focusedContainer;
+    private FunctionalWidget focusedWidget = null;
     private static float sfxVolume = 1;
     public static float SFXVolume { get { return sfxVolume; } set { sfxVolume = Math.Clamp(value, 0, 1); } }
     public IData selectedIcon;
@@ -30,22 +31,29 @@ public class UIManager
     {
         //Sets the focused container to be the first container that is enabled and that the mouse is over
         //If there are no available containers, sets to either the screen menu or a dummy window depending on if the screen window is enabled
-        focusedContainer = containers.Where(c => c.enabled && c.GetMouseOver()).FirstOrDefault() ?? (ScreenWindow != null && ScreenWindow.enabled ? ScreenWindow : new DummyWindow());
 
         MouseState newState = Mouse.GetState();
-        FunctionalWidget widget = focusedContainer.GetWidgetOver();
-        Vector2 clickLocation = 2 * (new Vector2(Mouse.GetState().X, Mouse.GetState().Y) - focusedContainer.position + focusedContainer.Center - widget.Offset) / (widget.Size * UIScale);
+        if(focusedWidget == null)
+        {
+            focusedContainer = containers.Where(c => c.enabled && c.GetMouseOver()).FirstOrDefault() ?? (ScreenWindow != null && ScreenWindow.enabled ? ScreenWindow : new DummyWindow());
+            focusedWidget = focusedContainer.GetWidgetOver();
+        }
+        Vector2 clickLocation = 2 * (new Vector2(newState.X, newState.Y) - focusedContainer.position + focusedContainer.Center - focusedWidget.Offset) / (focusedWidget.Size * UIScale);
         if (oldState.LeftButton == ButtonState.Pressed && newState.LeftButton == ButtonState.Released)
         {
-            widget.Interact(clickLocation);
+            focusedWidget.Interact(clickLocation);
         }
         //TODO: Make it so continuous interaction always goes after interacting with something, even when the cursor is off.
         if (oldState.LeftButton == ButtonState.Pressed) //oldState allows for falling edge conditionals
         {
-            widget.ContinuousInteract(clickLocation);
+            focusedWidget.ContinuousInteract(clickLocation);
         }
         focusedContainer.Update();
         oldState = newState;
+        if(newState.LeftButton == ButtonState.Released)
+        {
+            focusedWidget = null;
+        }
     }
     public bool ToggleToMenu(Container _container)
     {
