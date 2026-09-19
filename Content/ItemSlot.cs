@@ -11,44 +11,38 @@ namespace UILib.Content;
 public class ItemSlot<T> : FunctionalWidget where T : class, IData
 {
     public T daughterItem = default;
-    private UIManager UIManager;
     private List<Action> behaviours = [];
     public readonly List<int> ids;
-    public ItemSlot(Vector2 _offset, Texture2D _texture, UIManager _UIManager, int _id)
+    public ItemSlot(Vector2 _offset, Texture2D _texture, int _id)
     {
         Texture = _texture;
         offset = _offset;
-        UIManager = _UIManager;
         if(_id != -1)
         {
             ids = [_id];
         }
     }
-    public ItemSlot(Vector2 _offset, Texture2D _texture, UIManager _UImanager, List<int> _ids)
+    public ItemSlot(Vector2 _offset, Texture2D _texture, List<int> _ids)
     {
         Texture = _texture;
         offset = _offset;
-        UIManager = _UImanager;
         ids = _ids;
     }
     public override void Interact(Vector2 parentPosition)
     {
-        if (UIManager.selectedIcon == null)
+        if (UIManager.Self.selectedIcon == null)
         {
-            (daughterItem, UIManager.selectedIcon) = (null, daughterItem);
+            (daughterItem, UIManager.Self.selectedIcon) = (null, daughterItem);
         }
-        else if(ids == null || ids.Contains(UIManager.selectedIcon.ID))
+        else if(ids == null || ids.Contains(UIManager.Self.selectedIcon.ID))
         {
-            if (UIManager.selectedIcon as T == null)
+            if (UIManager.Self.selectedIcon as T == null)
             {
                 return;
             }
-            (daughterItem, UIManager.selectedIcon) = ((T)UIManager.selectedIcon, daughterItem);
+            (daughterItem, UIManager.Self.selectedIcon) = ((T)UIManager.Self.selectedIcon, daughterItem);
         }
-        for (int i = 0; i < behaviours.Count; i++)
-        {
-            ApplyBehaviours();
-        }
+        ApplyBehaviours();
     }
     public override void ContinuousInteract(Vector2 parentPosition) { }
     public override void AddBehaviour(Action func)

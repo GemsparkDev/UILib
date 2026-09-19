@@ -9,11 +9,5 @@ public interface IData
     public Window Tooltip { get; }
     public int ID { get; }
     public Color Color { get; }
-    public Vector2 Size
-    {
-        get 
-        {
-            return Texture != null ? UIManager.DimsOf(Texture) : Vector2.Zero;
-        }
-    }
+    public Vector2 Size => Texture != null ? UIManager.DimsOf(Texture) : Vector2.Zero;
 }
