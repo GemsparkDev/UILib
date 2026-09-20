@@ -10,7 +10,7 @@ namespace UILib.Content;
 
 public class ItemSlot<T> : FunctionalWidget where T : class, IData
 {
-    public T daughterItem = default;
+    public T Item { get; set; } = default;
     private List<Action> behaviours = [];
     public readonly List<int> ids;
     public ItemSlot(Vector2 _offset, Texture2D _texture, int _id)
@@ -32,7 +32,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
     {
         if (UIManager.Self.selectedIcon == null)
         {
-            (daughterItem, UIManager.Self.selectedIcon) = (null, daughterItem);
+            (Item, UIManager.Self.selectedIcon) = (null, Item);
         }
         else if(ids == null || ids.Contains(UIManager.Self.selectedIcon.ID))
         {
@@ -40,7 +40,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
             {
                 return;
             }
-            (daughterItem, UIManager.Self.selectedIcon) = ((T)UIManager.Self.selectedIcon, daughterItem);
+            (Item, UIManager.Self.selectedIcon) = ((T)UIManager.Self.selectedIcon, Item);
         }
         ApplyBehaviours();
     }
@@ -59,22 +59,22 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
     public override void Draw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center)
     {
         base.Draw(_spriteBatch, _parentPosition, _transparency, _center);
-        if (daughterItem == null || daughterItem.Texture == null)
+        if (Item == null || Item.Texture == null)
         {
             return;
         }
-        _spriteBatch.Draw(daughterItem.Texture, _parentPosition + Offset - _center, null, daughterItem.Color, 0, daughterItem.Size / 2, UIManager.UIScale, SpriteEffects.None, 0);
+        _spriteBatch.Draw(Item.Texture, _parentPosition + Offset - _center, null, Item.Color, 0, Item.Size / 2, UIManager.UIScale, SpriteEffects.None, 0);
     }
     public override void HoveringDraw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center) 
     {
         base.HoveringDraw(_spriteBatch, _parentPosition, _transparency, _center);
-        if (daughterItem == null || daughterItem.Tooltip == null)
+        if (Item == null || Item.Tooltip == null)
         {
             return;
         }
         MouseState newState = Mouse.GetState();
-        Texture2D tex = daughterItem.Tooltip.texture;
-        daughterItem.Tooltip.position = new Vector2(newState.Position.X, newState.Position.Y) + new Vector2(tex.Width, tex.Height)/2 * UIManager.UIScale;
-        daughterItem.Tooltip.Draw(_spriteBatch);
+        Texture2D tex = Item.Tooltip.texture;
+        Item.Tooltip.position = new Vector2(newState.Position.X, newState.Position.Y) + new Vector2(tex.Width, tex.Height)/2 * UIManager.UIScale;
+        Item.Tooltip.Draw(_spriteBatch);
     }
 }
