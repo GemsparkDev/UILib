@@ -27,14 +27,14 @@ public class Screen : Container
     {
         if (!enabled)
         {
-            return new DummyWidget();
+            return null;
         }
         float bestDistance = float.MaxValue;
         float currentDistance;
-        FunctionalWidget bestWidget = new DummyWidget();
+        FunctionalWidget bestWidget = null;
         foreach (var functionalWidget in functionalChildren)
         {
-            Widget widget = functionalWidget.widget as Widget ?? new DummyWidget();
+            var widget = functionalWidget.widget;
             Vector2 offset = widget.Offset;
             Vector2 halfSize = widget.Size / 2 * UIManager.UIScale;
             Vector2 center = WidgetOrigin(functionalWidget.widget as Widget, functionalWidget.alignment);
@@ -52,10 +52,7 @@ public class Screen : Container
         }
         return bestWidget;
     }
-    public override bool GetMouseOver()
-    {
-        return GetWidgetOver() is not DummyWidget;
-    }
+    public override bool GetMouseOver() => GetWidgetOver() != null;
     public override void Update()
     {
         foreach (var child in children)
@@ -82,7 +79,7 @@ public class Screen : Container
             widget.widget.Draw(spriteBatch, position, 1, WidgetOrigin(widget.widget, widget.alignment));
         }
         var w = GetWidgetOver();
-        if(w is not null and not DummyWidget)
+        if(w != null)
         {
             var alignment = functionalChildren.First(x => x.widget == w).alignment;
             w.HoveringDraw(spriteBatch, position, 1, WidgetOrigin(w, alignment));

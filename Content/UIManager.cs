@@ -17,6 +17,7 @@ public class UIManager
     public Screen ScreenWindow { get; set; }
     public Container focusedContainer;
     private FunctionalWidget focusedWidget = null;
+    public bool IsOver => focusedWidget != null;
     private static float sfxVolume = 1;
     public static float SFXVolume { get { return sfxVolume; } set { sfxVolume = Math.Clamp(value, 0, 1); } }
     public IData selectedIcon;
@@ -38,15 +39,17 @@ public class UIManager
             focusedContainer = containers.Where(c => c.enabled && c.GetMouseOver()).FirstOrDefault() ?? (ScreenWindow != null && ScreenWindow.enabled ? ScreenWindow : new DummyWindow());
             focusedWidget = focusedContainer.GetWidgetOver();
         }
-        Vector2 clickLocation = 2 * (new Vector2(newState.X, newState.Y) - focusedContainer.position + focusedContainer.Center - focusedWidget.Offset) / (focusedWidget.Size * UIScale);
-        if (oldState.LeftButton == ButtonState.Pressed && newState.LeftButton == ButtonState.Released)
+        if(focusedWidget != null)
         {
-            focusedWidget.Interact(clickLocation);
-        }
-        //TODO: Make it so continuous interaction always goes after interacting with something, even when the cursor is off.
-        if (oldState.LeftButton == ButtonState.Pressed) //oldState allows for falling edge conditionals
-        {
-            focusedWidget.ContinuousInteract(clickLocation);
+            Vector2 clickLocation = 2 * (new Vector2(newState.X, newState.Y) - focusedContainer.position + focusedContainer.Center - focusedWidget.Offset) / (focusedWidget.Size * UIScale);
+            if (oldState.LeftButton == ButtonState.Pressed && newState.LeftButton == ButtonState.Released)
+            {
+                focusedWidget.Interact(clickLocation);
+            }
+            if (oldState.LeftButton == ButtonState.Pressed) //oldState allows for falling edge conditionals
+            {
+                focusedWidget.ContinuousInteract(clickLocation);
+            }
         }
         focusedContainer.Update();
         oldState = newState;

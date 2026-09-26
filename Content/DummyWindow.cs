@@ -12,10 +12,7 @@ public class DummyWindow : Container
         transparency = 1;
     }
     public override bool GetMouseOver() { return false; }
-    public override FunctionalWidget GetWidgetOver()
-    {
-        return new DummyWidget();
-    }
+    public override FunctionalWidget GetWidgetOver() => null;
     public override void Draw(SpriteBatch _spriteBatch) { }
     public override void AddWidget(Widget widget, int tab) { }
     public override void AddWidget(FunctionalWidget widget, int tab) { }

@@ -91,7 +91,7 @@ public class TabbedWindow : Container
         Vector2 mousePosition = new Vector2(state.X, state.Y) - position + Center;
         float bestDistance = float.MaxValue;
         float currentDistance;
-        FunctionalWidget bestWidget = new DummyWidget();
+        FunctionalWidget bestWidget = null;
         if (state.LeftButton == ButtonState.Pressed)
         {
             for (int i = 0; i < totalTabs; i++)
@@ -110,14 +110,14 @@ public class TabbedWindow : Container
                         sound.Volume = UIManager.SFXVolume;
                         sound.Play();
                     }
-                    return new DummyWidget();
+                    return null;
                 }
             }
         }
         var funcMatches = from val in functionalChildren where val.tab == currentTab select val.widget;
         foreach (var functionalWidget in funcMatches)
         {
-            Widget widget = functionalWidget as Widget ?? new DummyWidget();
+            var widget = functionalWidget;
             Vector2 halfSize = widget.Size / 2 * UIManager.UIScale;
             if (widget.Offset.X - halfSize.X <= mousePosition.X && mousePosition.X <= widget.Offset.X + halfSize.X &&
                 widget.Offset.Y - halfSize.Y <= mousePosition.Y && mousePosition.Y <= widget.Offset.Y + halfSize.Y)

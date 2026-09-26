@@ -25,10 +25,9 @@ public class Window : Container
         Vector2 mousePosition = new Vector2(Mouse.GetState().X - position.X, Mouse.GetState().Y - position.Y) + Center;
         float bestDistance = float.MaxValue;
         float currentDistance;
-        FunctionalWidget bestWidget = new DummyWidget();
-        foreach (FunctionalWidget functionalWidget in functionalChildren)
+        FunctionalWidget bestWidget = null;
+        foreach (FunctionalWidget widget in functionalChildren)
         {
-            Widget widget = functionalWidget as Widget ?? new DummyWidget();
             Vector2 halfSize = widget.Size / 2 * UIManager.UIScale;
             if (widget.Offset.X - halfSize.X <= mousePosition.X && mousePosition.X <= widget.Offset.X + halfSize.X && 
                 widget.Offset.Y - halfSize.Y <= mousePosition.Y && mousePosition.Y <= widget.Offset.Y + halfSize.Y)
@@ -37,7 +36,7 @@ public class Window : Container
                 if (currentDistance < bestDistance)
                 {
                     bestDistance = currentDistance;
-                    bestWidget = functionalWidget;
+                    bestWidget = widget;
                 }
             }
         }
