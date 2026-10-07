@@ -10,13 +10,23 @@ namespace UILib.Content;
 public abstract class FunctionalWidget : Widget
 {
     public abstract void Interact(Vector2 parentPosition);
-    public virtual void ContinuousInteract(Vector2 clickPosition) 
+
+    public event InteractHandler RisingInteract;
+    public event InteractHandler FallingInteract;
+    public event InteractHandler ContinuousInteract;
+    public delegate void InteractHandler(object sender, Vector2 _clickPosition);
+    protected virtual void OnContinuousInteract(Vector2 _clickPosition)
     {
-        //offset = new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y) / UIManager.UIScale + UIManager.Self.ScreenWindow.WidgetOrigin(this) / 2;
-        //Debug.WriteLine(offset);
+        ContinuousInteract?.Invoke(this, _clickPosition);
     }
-    public abstract void AddBehaviour(Action func);
-    public abstract void ApplyBehaviours();
+    protected virtual void OnRisingInteract(Vector2 _clickPosition)
+    {
+        RisingInteract?.Invoke(this, _clickPosition);
+    }
+    protected virtual void OnFallingInteract(Vector2 _clickPosition)
+    {
+        FallingInteract?.Invoke(this, _clickPosition);
+    }
     public override void HoveringDraw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center)
     {
         /* Figure out outlines
