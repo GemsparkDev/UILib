@@ -55,8 +55,7 @@ public class Slider : FunctionalWidget
         }
         Intervals[_index] = Math.Clamp(_value/_maxValue, 0, 1);
     }
-    public override void Interact(Vector2 parentPosition) { }
-    public override void ContinuousInteract(Vector2 clickPosition)
+    public override void OnContinuousInteract(Vector2 clickPosition)
     {
         if (visualSlider)
         {
@@ -64,19 +63,7 @@ public class Slider : FunctionalWidget
         }
         //Adds a multiplier to subtract the added 8 pixel buffer zone
         SetInterval(clickPosition.X * (size.X)/(size.X-8) + 1, 2);
-        ApplyBehaviours();
-        base.ContinuousInteract(clickPosition);
-    }
-    public override void AddBehaviour(Action func)
-    {
-        behaviours.Add(func);
-    }
-    public override void ApplyBehaviours()
-    {
-        for (int i = 0; i < behaviours.Count; i++)
-        {
-            behaviours[i]();
-        }
+        base.OnContinuousInteract(clickPosition);
     }
     public override void Draw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center)
     {

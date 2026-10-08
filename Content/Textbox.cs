@@ -22,12 +22,11 @@ public class Textbox : FunctionalWidget
         textFont = _textFont;
         Text = "";
     }
-    public override void Interact(Vector2 parentPosition)
+    public override void OnRisingInteract(Vector2 clickPosition)
     {
-        ApplyBehaviours();
+        base.OnRisingInteract(clickPosition);
         isActive = !isActive;
     }
-    public override void ContinuousInteract(Vector2 parentPosition) { }
     public override void Update() 
     {
         if (!isActive)
@@ -112,20 +111,9 @@ public class Textbox : FunctionalWidget
         }
         if (input.Length > 0)
         {
-            ApplyBehaviours();
+            base.OnContinuousInteract(Vector2.Zero);
         }
         prevState = input;
-    }
-    public override void AddBehaviour(Action func)
-    {
-        behaviours.Add(func);
-    }
-    public override void ApplyBehaviours()
-    {
-        for (int i = 0; i < behaviours.Count; i++)
-        {
-            behaviours[i]();
-        }
     }
     public override void Draw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center)
     {

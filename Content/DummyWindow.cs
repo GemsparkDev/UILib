@@ -8,7 +8,7 @@ public class DummyWindow : Container
     public DummyWindow()
     {
         position = Vector2.Zero;
-        enabled = false;
+        IsEnabled = false;
         transparency = 1;
     }
     public override bool GetMouseOver() { return false; }

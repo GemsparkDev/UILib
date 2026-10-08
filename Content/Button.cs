@@ -9,7 +9,6 @@ namespace UILib.Content;
 
 public class Button : FunctionalWidget
 {
-    private List<Action> behaviours = [];
     private SpriteFont textFont;
     public Color TextColor { get; set; } = Color.White;
     private float textSize = 10f;
@@ -52,29 +51,21 @@ public class Button : FunctionalWidget
         Text = _text;
         TextColor = _textColor;
     }
-    public override void Interact(Vector2 parentPosition)
+    private void Flip()
     {
-        ApplyBehaviours();
         if (flipTexture != null)
         {
             (Texture, flipTexture) = (flipTexture, Texture);
         }
     }
+    public override void OnRisingInteract(Vector2 parentPosition)
+    {
+        base.OnRisingInteract(parentPosition);
+        Flip();
+    }
     public void AddTooltip(Window _tooltip)
     {
         Tooltip ??= _tooltip;
-    }
-    public override void ContinuousInteract(Vector2 parentPosition) { base.ContinuousInteract(parentPosition); }
-    public override void AddBehaviour(Action func)
-    {
-        behaviours.Add(func);
-    }
-    public override void ApplyBehaviours()
-    {
-        for (int i = 0; i < behaviours.Count; i++)
-        {
-            behaviours[i]();
-        }
     }
     public override void Draw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center)
     {

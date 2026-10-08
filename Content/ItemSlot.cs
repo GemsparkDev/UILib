@@ -11,7 +11,6 @@ namespace UILib.Content;
 public class ItemSlot<T> : FunctionalWidget where T : class, IData
 {
     public T Item { get; set; } = default;
-    private List<Action> behaviours = [];
     public readonly List<int> ids;
     public ItemSlot(Vector2 _offset, Texture2D _texture, int _id)
     {
@@ -28,7 +27,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
         offset = _offset;
         ids = _ids;
     }
-    public override void Interact(Vector2 parentPosition)
+    public override void OnRisingInteract(Vector2 clickPosition)
     {
         if (UIManager.Self.selectedIcon == null)
         {
@@ -42,19 +41,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
             }
             (Item, UIManager.Self.selectedIcon) = ((T)UIManager.Self.selectedIcon, Item);
         }
-        ApplyBehaviours();
-    }
-    public override void ContinuousInteract(Vector2 parentPosition) { }
-    public override void AddBehaviour(Action func)
-    {
-        behaviours.Add(func);
-    }
-    public override void ApplyBehaviours()
-    {
-        for (int i = 0; i < behaviours.Count; i++)
-        {
-            behaviours[i]();
-        }
+        base.OnRisingInteract(clickPosition);
     }
     public override void Draw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center)
     {

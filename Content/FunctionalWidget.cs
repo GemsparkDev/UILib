@@ -9,21 +9,19 @@ namespace UILib.Content;
 
 public abstract class FunctionalWidget : Widget
 {
-    public abstract void Interact(Vector2 parentPosition);
-
     public event InteractHandler RisingInteract;
     public event InteractHandler FallingInteract;
     public event InteractHandler ContinuousInteract;
     public delegate void InteractHandler(object sender, Vector2 _clickPosition);
-    protected virtual void OnContinuousInteract(Vector2 _clickPosition)
+    public virtual void OnContinuousInteract(Vector2 _clickPosition)
     {
         ContinuousInteract?.Invoke(this, _clickPosition);
     }
-    protected virtual void OnRisingInteract(Vector2 _clickPosition)
+    public virtual void OnRisingInteract(Vector2 _clickPosition)
     {
         RisingInteract?.Invoke(this, _clickPosition);
     }
-    protected virtual void OnFallingInteract(Vector2 _clickPosition)
+    public virtual void OnFallingInteract(Vector2 _clickPosition)
     {
         FallingInteract?.Invoke(this, _clickPosition);
     }

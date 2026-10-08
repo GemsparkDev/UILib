@@ -36,7 +36,7 @@ public class UIManager
         MouseState newState = Mouse.GetState();
         if(focusedWidget == null)
         {
-            focusedContainer = containers.Where(c => c.enabled && c.GetMouseOver()).FirstOrDefault() ?? (ScreenWindow != null && ScreenWindow.enabled ? ScreenWindow : new DummyWindow());
+            focusedContainer = containers.Where(c => c.IsEnabled && c.GetMouseOver()).FirstOrDefault() ?? (ScreenWindow != null && ScreenWindow.IsEnabled ? ScreenWindow : new DummyWindow());
             focusedWidget = focusedContainer.GetWidgetOver();
         }
         if(focusedWidget != null)
@@ -44,11 +44,15 @@ public class UIManager
             Vector2 clickLocation = 2 * (new Vector2(newState.X, newState.Y) - focusedContainer.position + focusedContainer.Center - focusedWidget.Offset) / (focusedWidget.Size * UIScale);
             if (oldState.LeftButton == ButtonState.Pressed && newState.LeftButton == ButtonState.Released)
             {
-                focusedWidget.Interact(clickLocation);
+                focusedWidget.OnFallingInteract(clickLocation);
             }
-            if (oldState.LeftButton == ButtonState.Pressed) //oldState allows for falling edge conditionals
+            if (oldState.LeftButton == ButtonState.Released && newState.LeftButton == ButtonState.Pressed)
             {
-                focusedWidget.ContinuousInteract(clickLocation);
+                focusedWidget.OnRisingInteract(clickLocation);
+            }
+            if (oldState.LeftButton == ButtonState.Pressed)
+            {
+                focusedWidget.OnContinuousInteract(clickLocation);
             }
         }
         focusedContainer.Update();
@@ -62,20 +66,20 @@ public class UIManager
     {
         foreach (Container container in containers)
         {
-            if (container.enabled && container != _container)
+            if (container.IsEnabled && container != _container)
             {
-                container.enabled = false;
+                container.IsEnabled = false;
                 return false;
             }
         }
-        _container.enabled = !_container.enabled;
+        _container.IsEnabled = !_container.IsEnabled;
         return true;
     }
     public void DisableAll()
     {
         foreach (var container in containers)
         {
-            container.enabled = false;
+            container.IsEnabled = false;
         }
     }
     public void AddContainer(Container container)
@@ -92,11 +96,11 @@ public class UIManager
     }
     public void Draw(SpriteBatch spriteBatch)
     {
-        if (ScreenWindow != null && ScreenWindow.enabled)
+        if (ScreenWindow != null && ScreenWindow.IsEnabled)
         {
             ScreenWindow.Draw(spriteBatch);
         }
-        foreach (Container container in containers.Where(c => c.enabled))
+        foreach (Container container in containers.Where(c => c.IsEnabled))
         {
             container.Draw(spriteBatch);
         }

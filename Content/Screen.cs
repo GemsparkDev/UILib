@@ -25,7 +25,7 @@ public class Screen : Container
     }
     public override FunctionalWidget GetWidgetOver()
     {
-        if (!enabled)
+        if (!IsEnabled)
         {
             return null;
         }
@@ -66,7 +66,7 @@ public class Screen : Container
     }
     public override void Draw(SpriteBatch spriteBatch)
     {
-        if (!enabled)
+        if (!IsEnabled)
         {
             return;
         }

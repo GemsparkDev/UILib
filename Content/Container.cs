@@ -9,7 +9,7 @@ public abstract class Container
 {
     public Vector2 position;
     //private Vector2 prevMousePosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
-    public bool enabled = false;
+    public bool IsEnabled { get; set; } = false;
     public Texture2D texture;
     public float transparency = 1;
     public Vector2 Size { get; protected set; } = Vector2.Zero;
