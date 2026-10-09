@@ -41,7 +41,7 @@ public class UIManager
         }
         if(focusedWidget != null)
         {
-            Vector2 clickLocation = 2 * (new Vector2(newState.X, newState.Y) - focusedContainer.position + focusedContainer.Center - focusedWidget.Offset) / (focusedWidget.Size * UIScale);
+            Vector2 clickLocation = 2 * (new Vector2(newState.X, newState.Y) - focusedContainer.Position + focusedContainer.Center - focusedWidget.Offset) / (focusedWidget.Size * UIScale);
             if (oldState.LeftButton == ButtonState.Pressed && newState.LeftButton == ButtonState.Released)
             {
                 focusedWidget.OnFallingInteract(clickLocation);

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Linq;
 
 namespace UILib.Content;
-public class Screen : Container
+public class Screen() : Container(Vector2.Zero, null)
 {
     private List<(Widget widget, Alignment alignment)> children = [];
     private List<(FunctionalWidget widget, Alignment alignment)> functionalChildren = [];
@@ -38,7 +38,7 @@ public class Screen : Container
             Vector2 offset = widget.Offset;
             Vector2 halfSize = widget.Size / 2 * UIManager.UIScale;
             Vector2 center = WidgetOrigin(functionalWidget.widget as Widget, functionalWidget.alignment);
-            var mousePosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y) - position + center;
+            var mousePosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y) - Position + center;
             if (offset.X - halfSize.X <= mousePosition.X && mousePosition.X <= offset.X + halfSize.X &&
                 offset.Y - halfSize.Y <= mousePosition.Y && mousePosition.Y <= offset.Y + halfSize.Y)
             {
@@ -72,17 +72,17 @@ public class Screen : Container
         }
         foreach (var widget in children)
         {
-            widget.widget.Draw(spriteBatch, position, 1, WidgetOrigin(widget.widget, widget.alignment));
+            widget.widget.Draw(spriteBatch, Position, 1, WidgetOrigin(widget.widget, widget.alignment));
         }
         foreach (var widget in functionalChildren)
         {
-            widget.widget.Draw(spriteBatch, position, 1, WidgetOrigin(widget.widget, widget.alignment));
+            widget.widget.Draw(spriteBatch, Position, 1, WidgetOrigin(widget.widget, widget.alignment));
         }
         var w = GetWidgetOver();
         if(w != null)
         {
             var alignment = functionalChildren.First(x => x.widget == w).alignment;
-            w.HoveringDraw(spriteBatch, position, 1, WidgetOrigin(w, alignment));
+            w.HoveringDraw(spriteBatch, Position, 1, WidgetOrigin(w, alignment));
         }
     }
     public override Vector2 WidgetOrigin(Widget _widget)

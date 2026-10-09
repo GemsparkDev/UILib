@@ -60,8 +60,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
             return;
         }
         MouseState newState = Mouse.GetState();
-        Texture2D tex = Item.Tooltip.texture;
-        Item.Tooltip.position = new Vector2(newState.Position.X, newState.Position.Y) + new Vector2(tex.Width, tex.Height)/2 * UIManager.UIScale;
+        Item.Tooltip.Position = new Vector2(newState.Position.X, newState.Position.Y) + Item.Tooltip.Size/2 * UIManager.UIScale;
         Item.Tooltip.Draw(_spriteBatch);
     }
 }

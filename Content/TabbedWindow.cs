@@ -21,21 +21,17 @@ public class TabbedWindow : Container
     public Texture2D tabTexture;
     public Texture2D selectedTabTexture;
     public SoundEffect selectSound;
-    public TabbedWindow(Vector2 _position, Texture2D _texture, Texture2D _tabTexture, Texture2D _selectedTabTexture, SoundEffect _selectSound, int? _tabs, float _transparency = 1)
+    public TabbedWindow(Vector2 _unitPosition, Texture2D _texture, Texture2D _tabTexture, Texture2D _selectedTabTexture, SoundEffect _selectSound, int? _tabs) : base(_unitPosition, _texture)
     {
-        Size = UIManager.DimsOf(_texture);
-        texture = _texture;
         tabTexture = _tabTexture;
         selectedTabTexture = _selectedTabTexture;
         selectSound = _selectSound;
-        position = _position;
         totalTabs = _tabs?? 0;
-        transparency = _transparency;
         RecalculateTabs();
     }
     public override Vector2 WidgetOrigin(Widget _widget)
     {
-        return position - Origin + Size / 2;
+        return Position - Origin + Size / 2;
     }
     public override void AddWidget(Widget widget, int tab = 0)
     {
@@ -63,8 +59,8 @@ public class TabbedWindow : Container
     {
         Vector2 mousePosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y) + Center;
         Vector2 halfSize = Size / 2 * UIManager.UIScale;
-        return position.X - halfSize.X <= mousePosition.X && mousePosition.X <= position.X + halfSize.X 
-             && position.Y - halfSize.Y - UIManager.DimsOf(tabTexture).Y * UIManager.UIScale <= mousePosition.Y && mousePosition.Y <= position.Y + halfSize.Y;
+        return Position.X - halfSize.X <= mousePosition.X && mousePosition.X <= Position.X + halfSize.X 
+             && Position.Y - halfSize.Y - UIManager.DimsOf(tabTexture).Y * UIManager.UIScale <= mousePosition.Y && mousePosition.Y <= Position.Y + halfSize.Y;
     }
     public override void Update()
     {
@@ -88,7 +84,7 @@ public class TabbedWindow : Container
     public override FunctionalWidget GetWidgetOver()
     {
         var state = Mouse.GetState();
-        Vector2 mousePosition = new Vector2(state.X, state.Y) - position + Center;
+        Vector2 mousePosition = new Vector2(state.X, state.Y) - Position + Center;
         float bestDistance = float.MaxValue;
         float currentDistance;
         FunctionalWidget bestWidget = null;
@@ -158,13 +154,13 @@ public class TabbedWindow : Container
         {
             if (tabList[i].Texture != null)
             {
-                tabList[i].Draw(_spriteBatch, position, transparency, Center);
+                tabList[i].Draw(_spriteBatch, Position, Transparency, Center);
             }
             if(i < icons.Count)
             {
                 if (icons[i] != null)
                 {
-                    Vector2 placementPosition = position + tabList[i].Offset; 
+                    Vector2 placementPosition = Position + tabList[i].Offset; 
                     if(i == currentTab)
                     {
                         placementPosition += new Vector2(-icons[i].Width / 2 * UIManager.UIScale, -icons[i].Height / 4 * UIManager.UIScale);
@@ -173,7 +169,7 @@ public class TabbedWindow : Container
                     {
                         placementPosition += new Vector2(-icons[i].Width / 2 * UIManager.UIScale, icons[i].Height / 4 * UIManager.UIScale);
                     }
-                    _spriteBatch.Draw(icons[i], placementPosition - Center, null, Color.White * transparency, 0, Vector2.Zero, UIManager.UIScale, SpriteEffects.None, 0.4f);
+                    _spriteBatch.Draw(icons[i], placementPosition - Center, null, Color.White * Transparency, 0, Vector2.Zero, UIManager.UIScale, SpriteEffects.None, 0.4f);
                 }
             }
         }
@@ -186,7 +182,7 @@ public class TabbedWindow : Container
             {
                 if (functionalWidget is Widget widget)
                 {
-                    widget.Draw(_spriteBatch, position, transparency, Center);
+                    widget.Draw(_spriteBatch, Position, Transparency, Center);
                 }
             }
         }
@@ -195,12 +191,12 @@ public class TabbedWindow : Container
             var matches = from val in children where val.tab == currentTab select val.widget;
             foreach (var widget in matches)
             {
-                widget.Draw(_spriteBatch, position, transparency, Center);
+                widget.Draw(_spriteBatch, Position, Transparency, Center);
             }
         }
         if (GetWidgetOver() != null)
         {
-            (GetWidgetOver() as Widget).HoveringDraw(_spriteBatch, position, transparency, Center);
+            (GetWidgetOver() as Widget).HoveringDraw(_spriteBatch, Position, Transparency, Center);
         }
     }
 }

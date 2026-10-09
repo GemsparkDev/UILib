@@ -10,7 +10,7 @@ namespace UILib.Content;
 public class Slider : FunctionalWidget
 {
     private List<Action> behaviours = [];
-    private Texture2D knob;
+    protected Texture2D knob;
     public float[] Intervals { get; set; } = [0];
     protected Vector2 sliderSize;
     public bool visualSlider;

@@ -5,11 +5,9 @@ namespace UILib.Content;
 
 public class DummyWindow : Container
 {
-    public DummyWindow()
+    public DummyWindow() : base(Vector2.Zero, null)
     {
-        position = Vector2.Zero;
         IsEnabled = false;
-        transparency = 1;
     }
     public override bool GetMouseOver() { return false; }
     public override FunctionalWidget GetWidgetOver() => null;

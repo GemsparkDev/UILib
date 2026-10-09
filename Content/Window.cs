@@ -5,24 +5,17 @@ using System.Collections.Generic;
 
 namespace UILib.Content;
 
-public class Window : Container
+public class Window(Vector2 _unitPosition, Texture2D _texture) : Container(_unitPosition, _texture)
 {
     private List<Widget> children = [];
     private List<FunctionalWidget> functionalChildren = [];
-    public Window(Vector2 _position, Texture2D _texture, float _transparency = 1)
-    {
-        Size = UIManager.DimsOf(_texture);
-        texture = _texture;
-        position = _position;
-        transparency = _transparency;
-    }
     public override Vector2 WidgetOrigin(Widget _widget)
     {
-        return position - Origin + Size / 2;
+        return Position - Origin + Size / 2;
     }
     public override FunctionalWidget GetWidgetOver()
     {
-        Vector2 mousePosition = new Vector2(Mouse.GetState().X - position.X, Mouse.GetState().Y - position.Y) + Center;
+        Vector2 mousePosition = new Vector2(Mouse.GetState().X - Position.X, Mouse.GetState().Y - Position.Y) + Center;
         float bestDistance = float.MaxValue;
         float currentDistance;
         FunctionalWidget bestWidget = null;
@@ -50,30 +43,30 @@ public class Window : Container
         }
         foreach (var child in functionalChildren)
         {
-            (child as Widget).Update();
+            child.Update();
         }
     }
     public override bool GetMouseOver()
     {
         Vector2 mousePosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y) + Center;
         Vector2 halfSize = Size / 2 * UIManager.UIScale;
-        return position.X - halfSize.X <= mousePosition.X && mousePosition.X <= position.X + halfSize.X && position.Y - halfSize.Y <= mousePosition.Y && mousePosition.Y <= position.Y + halfSize.Y;
+        return Position.X - halfSize.X <= mousePosition.X && mousePosition.X <= Position.X + halfSize.X && Position.Y - halfSize.Y <= mousePosition.Y && mousePosition.Y <= Position.Y + halfSize.Y;
     }
     public override void Draw(SpriteBatch _spriteBatch)
     {
         base.Draw(_spriteBatch);
         foreach (var widget in children)
         {
-            widget.Draw(_spriteBatch, position, transparency, Center);
+            widget.Draw(_spriteBatch, Position, Transparency, Center);
         }
         foreach (var functionalWidget in functionalChildren)
         {
             if (functionalWidget is Widget widget)
             {
-                widget.Draw(_spriteBatch, position, transparency, Center);
+                widget.Draw(_spriteBatch, Position, Transparency, Center);
             }
         }
-        GetWidgetOver()?.HoveringDraw(_spriteBatch, position, transparency, Center);
+        GetWidgetOver()?.HoveringDraw(_spriteBatch, Position, Transparency, Center);
     }
     public override void AddWidget(Widget widget, int index = 0)
     {

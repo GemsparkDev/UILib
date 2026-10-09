@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace UILib.Content;
 
-public abstract class Container
+public abstract class Container(Vector2 unitPosition, Texture2D texture)
 {
-    public Vector2 position;
-    //private Vector2 prevMousePosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+    public Vector2 UnitPosition { get; set; } = unitPosition;
+    public Vector2 Position { get => UnitPosition * UIManager.BackBuffer / 2; set => UnitPosition = value * 2 / UIManager.BackBuffer; } //Using unit position means UI elements scale properly when changing the screen width.
+    public Texture2D Texture { get; set; } = texture;
     public bool IsEnabled { get; set; } = false;
-    public Texture2D texture;
-    public float transparency = 1;
-    public Vector2 Size { get; protected set; } = Vector2.Zero;
+    public float Transparency { get; set; } = 1;
+    public virtual Vector2 Size => UIManager.DimsOf(Texture);
     public abstract void AddWidget(Widget widget, int tab = 0);
     public abstract void AddWidget(FunctionalWidget widget, int tab = 0);
     public Alignment alignment = Alignment.Center;
@@ -46,16 +46,16 @@ public abstract class Container
     public virtual bool GetMouseOver()
     {
         Vector2 mousePosition = new(Mouse.GetState().X, Mouse.GetState().Y);
-        return position.X <= mousePosition.X && mousePosition.X <= position.X + Size.X * UIManager.UIScale && position.Y <= mousePosition.Y && mousePosition.Y <= position.Y + Size.Y * UIManager.UIScale;
+        return Position.X <= mousePosition.X && mousePosition.X <= Position.X + Size.X * UIManager.UIScale && Position.Y <= mousePosition.Y && mousePosition.Y <= Position.Y + Size.Y * UIManager.UIScale;
     }
     public abstract FunctionalWidget GetWidgetOver();
     public virtual void Draw(SpriteBatch spriteBatch)
     {
-        if(texture == null)
+        if(Texture == null)
         {
             return;
         }
-        spriteBatch.Draw(texture, position, null, Color.White * transparency, 0, Origin, UIManager.UIScale, SpriteEffects.None, 0.35f);
+        spriteBatch.Draw(Texture, Position, null, Color.White * Transparency, 0, Origin, UIManager.UIScale, SpriteEffects.None, 0.35f);
     }
 }
 public enum Alignment
