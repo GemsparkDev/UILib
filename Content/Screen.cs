@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Linq;
 
 namespace UILib.Content;
-public class Screen() : Container(Vector2.Zero, null)
+public class Screen() : Container(-Vector2.One, null)
 {
     private List<(Widget widget, Alignment alignment)> children = [];
     private List<(FunctionalWidget widget, Alignment alignment)> functionalChildren = [];

@@ -8,7 +8,9 @@ namespace UILib.Content;
 public abstract class Container(Vector2 unitPosition, Texture2D texture)
 {
     public Vector2 UnitPosition { get; set; } = unitPosition;
-    public Vector2 Position { get => UnitPosition * UIManager.BackBuffer / 2; set => UnitPosition = value * 2 / UIManager.BackBuffer; } //Using unit position means UI elements scale properly when changing the screen width.
+    public Vector2 Position { 
+        get => (UnitPosition + Vector2.One) * UIManager.BackBuffer / 2; 
+        set => UnitPosition = value * 2 / UIManager.BackBuffer - Vector2.One; } //Using unit position means UI elements scale properly when changing the screen width.
     public Texture2D Texture { get; set; } = texture;
     public bool IsEnabled { get; set; } = false;
     public float Transparency { get; set; } = 1;
