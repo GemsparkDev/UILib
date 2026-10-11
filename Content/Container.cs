@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
 
 namespace UILib.Content;
 
@@ -45,11 +43,7 @@ public abstract class Container(Vector2 unitPosition, Texture2D texture)
     public abstract Vector2 WidgetOrigin(Widget _widget);
     public abstract void Update();
     public Vector2 Center => (Origin - Size / 2) * UIManager.UIScale;
-    public virtual bool GetMouseOver()
-    {
-        Vector2 mousePosition = new(Mouse.GetState().X, Mouse.GetState().Y);
-        return Position.X <= mousePosition.X && mousePosition.X <= Position.X + Size.X * UIManager.UIScale && Position.Y <= mousePosition.Y && mousePosition.Y <= Position.Y + Size.Y * UIManager.UIScale;
-    }
+    public virtual bool GetMouseOver() => Position.X <= UIManager.NewPosition.X && UIManager.NewPosition.X <= Position.X + Size.X* UIManager.UIScale && Position.Y <= UIManager.NewPosition.Y && UIManager.NewPosition.Y <= Position.Y + Size.Y* UIManager.UIScale;
     public abstract FunctionalWidget GetWidgetOver();
     public virtual void Draw(SpriteBatch spriteBatch)
     {

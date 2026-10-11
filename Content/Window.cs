@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
 namespace UILib.Content;
@@ -15,17 +14,17 @@ public class Window(Vector2 _unitPosition, Texture2D _texture) : Container(_unit
     }
     public override FunctionalWidget GetWidgetOver()
     {
-        Vector2 mousePosition = new Vector2(Mouse.GetState().X - Position.X, Mouse.GetState().Y - Position.Y) + Center;
+        Vector2 mp = UIManager.NewPosition - Position + Center;
         float bestDistance = float.MaxValue;
         float currentDistance;
         FunctionalWidget bestWidget = null;
         foreach (FunctionalWidget widget in functionalChildren)
         {
-            Vector2 halfSize = widget.Size / 2 * UIManager.UIScale;
-            if (widget.Offset.X - halfSize.X <= mousePosition.X && mousePosition.X <= widget.Offset.X + halfSize.X && 
-                widget.Offset.Y - halfSize.Y <= mousePosition.Y && mousePosition.Y <= widget.Offset.Y + halfSize.Y)
+            Vector2 hs = widget.Size / 2 * UIManager.UIScale;
+            if (widget.Offset.X - hs.X <= mp.X && mp.X <= widget.Offset.X + hs.X && 
+                widget.Offset.Y - hs.Y <= mp.Y && mp.Y <= widget.Offset.Y + hs.Y)
             {
-                currentDistance = Vector2.DistanceSquared(widget.Size / 2 * UIManager.UIScale + widget.Offset, mousePosition);
+                currentDistance = Vector2.DistanceSquared(widget.Size / 2 * UIManager.UIScale + widget.Offset, mp);
                 if (currentDistance < bestDistance)
                 {
                     bestDistance = currentDistance;
@@ -48,9 +47,9 @@ public class Window(Vector2 _unitPosition, Texture2D _texture) : Container(_unit
     }
     public override bool GetMouseOver()
     {
-        Vector2 mousePosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y) + Center;
-        Vector2 halfSize = Size / 2 * UIManager.UIScale;
-        return Position.X - halfSize.X <= mousePosition.X && mousePosition.X <= Position.X + halfSize.X && Position.Y - halfSize.Y <= mousePosition.Y && mousePosition.Y <= Position.Y + halfSize.Y;
+        Vector2 mp = UIManager.NewPosition + Center;
+        Vector2 hs = Size / 2 * UIManager.UIScale;
+        return Position.X - hs.X <= mp.X && mp.X <= Position.X + hs.X && Position.Y - hs.Y <= mp.Y && mp.Y <= Position.Y + hs.Y;
     }
     public override void Draw(SpriteBatch _spriteBatch)
     {

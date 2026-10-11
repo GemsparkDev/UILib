@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework.Audio;
@@ -57,10 +55,10 @@ public class TabbedWindow : Container
     }
     public override bool GetMouseOver()
     {
-        Vector2 mousePosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y) + Center;
-        Vector2 halfSize = Size / 2 * UIManager.UIScale;
-        return Position.X - halfSize.X <= mousePosition.X && mousePosition.X <= Position.X + halfSize.X 
-             && Position.Y - halfSize.Y - UIManager.DimsOf(tabTexture).Y * UIManager.UIScale <= mousePosition.Y && mousePosition.Y <= Position.Y + halfSize.Y;
+        Vector2 mp = UIManager.NewPosition + Center;
+        Vector2 hs = Size / 2 * UIManager.UIScale;
+        return Position.X - hs.X <= mp.X && mp.X <= Position.X + hs.X 
+             && Position.Y - hs.Y - UIManager.DimsOf(tabTexture).Y * UIManager.UIScale <= mp.Y && mp.Y <= Position.Y + hs.Y;
     }
     public override void Update()
     {
@@ -83,18 +81,17 @@ public class TabbedWindow : Container
     }
     public override FunctionalWidget GetWidgetOver()
     {
-        var state = Mouse.GetState();
-        Vector2 mousePosition = new Vector2(state.X, state.Y) - Position + Center;
+        Vector2 mp = UIManager.NewPosition - Position + Center;
         float bestDistance = float.MaxValue;
         float currentDistance;
         FunctionalWidget bestWidget = null;
-        if (state.LeftButton == ButtonState.Pressed)
+        if (UIManager.NewInput[0])
         {
             for (int i = 0; i < totalTabs; i++)
             {
                 Vector2 offset = tabList[i].Size / 2 * UIManager.UIScale;
-                if (tabList[i].Offset.X - offset.X <= mousePosition.X && mousePosition.X <= tabList[i].Offset.X + offset.X
-                 && tabList[i].Offset.Y - offset.Y <= mousePosition.Y && mousePosition.Y <= tabList[i].Offset.Y + offset.Y)
+                if (tabList[i].Offset.X - offset.X <= mp.X && mp.X <= tabList[i].Offset.X + offset.X
+                 && tabList[i].Offset.Y - offset.Y <= mp.Y && mp.Y <= tabList[i].Offset.Y + offset.Y)
                 {
                     prevTab = currentTab;
                     if (currentTab != i)
@@ -115,10 +112,10 @@ public class TabbedWindow : Container
         {
             var widget = functionalWidget;
             Vector2 halfSize = widget.Size / 2 * UIManager.UIScale;
-            if (widget.Offset.X - halfSize.X <= mousePosition.X && mousePosition.X <= widget.Offset.X + halfSize.X &&
-                widget.Offset.Y - halfSize.Y <= mousePosition.Y && mousePosition.Y <= widget.Offset.Y + halfSize.Y)
+            if (widget.Offset.X - halfSize.X <= mp.X && mp.X <= widget.Offset.X + halfSize.X &&
+                widget.Offset.Y - halfSize.Y <= mp.Y && mp.Y <= widget.Offset.Y + halfSize.Y)
             {
-                currentDistance = Vector2.DistanceSquared(widget.Size/2 + widget.Offset, mousePosition);
+                currentDistance = Vector2.DistanceSquared(widget.Size/2 + widget.Offset, mp);
                 if (currentDistance < bestDistance)
                 {
                     bestDistance = currentDistance;
@@ -194,9 +191,6 @@ public class TabbedWindow : Container
                 widget.Draw(_spriteBatch, Position, Transparency, Center);
             }
         }
-        if (GetWidgetOver() != null)
-        {
-            (GetWidgetOver() as Widget).HoveringDraw(_spriteBatch, Position, Transparency, Center);
-        }
+        GetWidgetOver()?.HoveringDraw(_spriteBatch, Position, Transparency, Center);
     }
 }

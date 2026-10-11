@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Linq;
 using System;
@@ -11,8 +10,11 @@ public class UIManager
 {
     private static Func<Vector2> backBuffer;
     public static Vector2 BackBuffer => backBuffer();
-
-    private MouseState oldState;
+    //Always use this for UI mouse input.
+    public static Vector2 NewPosition { get; private set; } = Vector2.Zero;
+    public static Vector2 OldPosition { get; private set; } = Vector2.Zero;
+    public static bool[] NewInput { get; private set; } = [false, false];
+    public static bool[] OldInput { get; private set; } = [false, false];
     private readonly List<Container> containers = [];
     public Screen ScreenWindow { get; set; }
     public Container focusedContainer;
@@ -28,36 +30,37 @@ public class UIManager
         Self = this;
         backBuffer = _backBuffer;
     }
-    public void Update()
+    public void Update(Vector2 _newPosition, bool[] _newInput)
     {
+        OldPosition = NewPosition;
+        OldInput = NewInput;
+        NewPosition = _newPosition;
+        NewInput = _newInput;
         //Sets the focused container to be the first container that is enabled and that the mouse is over
         //If there are no available containers, sets to either the screen menu or a dummy window depending on if the screen window is enabled
-
-        MouseState newState = Mouse.GetState();
-        if(focusedWidget == null)
+        if (focusedWidget == null)
         {
             focusedContainer = containers.Where(c => c.IsEnabled && c.GetMouseOver()).FirstOrDefault() ?? (ScreenWindow != null && ScreenWindow.IsEnabled ? ScreenWindow : new DummyWindow());
             focusedWidget = focusedContainer.GetWidgetOver();
         }
-        if(focusedWidget != null)
+        if (focusedWidget != null)
         {
-            Vector2 clickLocation = 2 * (new Vector2(newState.X, newState.Y) - focusedContainer.Position + focusedContainer.Center - focusedWidget.Offset) / (focusedWidget.Size * UIScale);
-            if (oldState.LeftButton == ButtonState.Pressed && newState.LeftButton == ButtonState.Released)
+            Vector2 clickLocation = 2 * (_newPosition - focusedContainer.Position + focusedContainer.Center - focusedWidget.Offset) / (focusedWidget.Size * UIScale);
+            if (OldInput[0] && !_newInput[0])
             {
                 focusedWidget.OnFallingInteract(clickLocation);
             }
-            if (oldState.LeftButton == ButtonState.Released && newState.LeftButton == ButtonState.Pressed)
+            if (!OldInput[0] && _newInput[0])
             {
                 focusedWidget.OnRisingInteract(clickLocation);
             }
-            if (oldState.LeftButton == ButtonState.Pressed)
+            if (NewInput[0])
             {
                 focusedWidget.OnContinuousInteract(clickLocation);
             }
         }
         focusedContainer.Update();
-        oldState = newState;
-        if(newState.LeftButton == ButtonState.Released)
+        if (!_newInput[0])
         {
             focusedWidget = null;
         }
@@ -106,7 +109,7 @@ public class UIManager
         }
         if (selectedIcon != null && selectedIcon.Texture != null)
         {
-            spriteBatch.Draw(selectedIcon.Texture, new Vector2(Mouse.GetState().X, Mouse.GetState().Y), null, selectedIcon.Color, 0, DimsOf(selectedIcon.Texture) / 2, UIScale, SpriteEffects.None, 0.35f);
+            spriteBatch.Draw(selectedIcon.Texture, NewPosition, null, selectedIcon.Color, 0, DimsOf(selectedIcon.Texture) / 2, UIScale, SpriteEffects.None, 0.35f);
         }
     }
 }

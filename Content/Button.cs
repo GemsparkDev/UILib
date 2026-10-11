@@ -1,9 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using System;
-using Microsoft.Xna.Framework.Input;
-using System.Diagnostics;
 
 namespace UILib.Content;
 
@@ -88,8 +84,7 @@ public class Button : FunctionalWidget
         {
             return;
         }
-        MouseState newState = Mouse.GetState();
-        Tooltip.Position = new Vector2(newState.Position.X, newState.Position.Y) + Tooltip.Size / 2 * UIManager.UIScale;
+        Tooltip.Position = UIManager.NewPosition + Tooltip.Size / 2 * UIManager.UIScale;
         Tooltip.Draw(_spriteBatch);
     }
 }

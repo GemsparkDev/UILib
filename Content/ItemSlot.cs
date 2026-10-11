@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System;
-using Microsoft.Xna.Framework.Input;
-using System.Diagnostics;
-using System.Linq;
 
 namespace UILib.Content;
 
@@ -59,8 +55,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
         {
             return;
         }
-        MouseState newState = Mouse.GetState();
-        Item.Tooltip.Position = new Vector2(newState.Position.X, newState.Position.Y) + Item.Tooltip.Size/2 * UIManager.UIScale;
+        Item.Tooltip.Position = UIManager.NewPosition + Item.Tooltip.Size/2 * UIManager.UIScale;
         Item.Tooltip.Draw(_spriteBatch);
     }
 }

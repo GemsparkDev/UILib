@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Input;
 using System.Linq;
 
 namespace UILib.Content;
@@ -35,14 +34,14 @@ public class Screen() : Container(-Vector2.One, null)
         foreach (var functionalWidget in functionalChildren)
         {
             var widget = functionalWidget.widget;
-            Vector2 offset = widget.Offset;
-            Vector2 halfSize = widget.Size / 2 * UIManager.UIScale;
+            Vector2 o = widget.Offset;
+            Vector2 hs = widget.Size / 2 * UIManager.UIScale;
             Vector2 center = WidgetOrigin(functionalWidget.widget as Widget, functionalWidget.alignment);
-            var mousePosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y) - Position + center;
-            if (offset.X - halfSize.X <= mousePosition.X && mousePosition.X <= offset.X + halfSize.X &&
-                offset.Y - halfSize.Y <= mousePosition.Y && mousePosition.Y <= offset.Y + halfSize.Y)
+            var mp = UIManager.NewPosition - Position + center;
+            if (o.X - hs.X <= mp.X && mp.X <= o.X + hs.X &&
+                o.Y - hs.Y <= mp.Y && mp.Y <= o.Y + hs.Y)
             {
-                currentDistance = Vector2.DistanceSquared(halfSize + offset, mousePosition);
+                currentDistance = Vector2.DistanceSquared(hs + o, mp);
                 if (currentDistance < bestDistance)
                 {
                     bestDistance = currentDistance;
