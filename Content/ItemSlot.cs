@@ -8,7 +8,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
 {
     public T Item { get; set; } = default;
     public readonly List<int> ids;
-    public ItemSlot(Vector2 _offset, Texture2D _texture, int _id)
+    public ItemSlot(Vector2 _offset, Texture2D _texture, int _id, Container _container, int[] _index) : base(_container, _index)
     {
         Texture = _texture;
         offset = _offset;
@@ -17,7 +17,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
             ids = [_id];
         }
     }
-    public ItemSlot(Vector2 _offset, Texture2D _texture, List<int> _ids)
+    public ItemSlot(Vector2 _offset, Texture2D _texture, List<int> _ids, Container _container, int[] _index) : base(_container, _index)
     {
         Texture = _texture;
         offset = _offset;
@@ -25,17 +25,17 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
     }
     public override void OnRisingInteract(Vector2 clickPosition)
     {
-        if (UIManager.Self.selectedIcon == null)
+        if (container.Manager.selectedIcon == null)
         {
-            (Item, UIManager.Self.selectedIcon) = (null, Item);
+            (Item, container.Manager.selectedIcon) = (null, Item);
         }
-        else if(ids == null || ids.Contains(UIManager.Self.selectedIcon.ID))
+        else if(ids == null || ids.Contains(container.Manager.selectedIcon.ID))
         {
-            if (UIManager.Self.selectedIcon as T == null)
+            if (container.Manager.selectedIcon as T == null)
             {
                 return;
             }
-            (Item, UIManager.Self.selectedIcon) = ((T)UIManager.Self.selectedIcon, Item);
+            (Item, container.Manager.selectedIcon) = ((T)container.Manager.selectedIcon, Item);
         }
         base.OnRisingInteract(clickPosition);
     }
@@ -55,7 +55,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
         {
             return;
         }
-        Item.Tooltip.Position = UIManager.NewPosition + Item.Tooltip.Size/2 * UIManager.UIScale;
+        Item.Tooltip.Position = container.Manager.NewPosition + Item.Tooltip.Size/2 * UIManager.UIScale;
         Item.Tooltip.Draw(_spriteBatch);
     }
 }

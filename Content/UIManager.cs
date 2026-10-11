@@ -8,15 +8,14 @@ using System.Diagnostics;
 namespace UILib.Content;
 public class UIManager
 {
-    private static Func<Vector2> backBuffer;
-    public static Vector2 BackBuffer => backBuffer();
+    public static Func<Vector2> GetBackBuffer { get; set; }
+    public static Vector2 BackBuffer => GetBackBuffer();
     //Always use this for UI mouse input.
-    public static Vector2 NewPosition { get; private set; } = Vector2.Zero;
-    public static Vector2 OldPosition { get; private set; } = Vector2.Zero;
-    public static bool[] NewInput { get; private set; } = [false, false];
-    public static bool[] OldInput { get; private set; } = [false, false];
+    public Vector2 NewPosition { get; private set; } = Vector2.Zero;
+    public Vector2 OldPosition { get; private set; } = Vector2.Zero;
+    public bool[] NewInput { get; private set; } = [false, false];
+    public bool[] OldInput { get; private set; } = [false, false];
     private readonly List<Container> containers = [];
-    public Screen ScreenWindow { get; set; }
     public Container focusedContainer;
     private FunctionalWidget focusedWidget = null;
     public bool IsOver => focusedWidget != null;
@@ -24,12 +23,6 @@ public class UIManager
     public static float SFXVolume { get { return sfxVolume; } set { sfxVolume = Math.Clamp(value, 0, 1); } }
     public IData selectedIcon;
     public static float UIScale { get; set; } = 2f;
-    public static UIManager Self { get; private set; }
-    public UIManager(Func<Vector2> _backBuffer)
-    {
-        Self = this;
-        backBuffer = _backBuffer;
-    }
     public void Update(Vector2 _newPosition, bool[] _newInput)
     {
         OldPosition = NewPosition;
@@ -40,8 +33,8 @@ public class UIManager
         //If there are no available containers, sets to either the screen menu or a dummy window depending on if the screen window is enabled
         if (focusedWidget == null)
         {
-            focusedContainer = containers.Where(c => c.IsEnabled && c.GetMouseOver()).FirstOrDefault() ?? (ScreenWindow != null && ScreenWindow.IsEnabled ? ScreenWindow : new DummyWindow());
-            focusedWidget = focusedContainer.GetWidgetOver();
+            focusedContainer = containers.Where(c => c.IsEnabled && c.GetMouseOver()).FirstOrDefault();
+            focusedWidget = focusedContainer?.GetWidgetOver();
         }
         if (focusedWidget != null)
         {
@@ -59,7 +52,7 @@ public class UIManager
                 focusedWidget.OnContinuousInteract(clickLocation);
             }
         }
-        focusedContainer.Update();
+        focusedContainer?.Update();
         if (!_newInput[0])
         {
             focusedWidget = null;
@@ -99,10 +92,6 @@ public class UIManager
     }
     public void Draw(SpriteBatch spriteBatch)
     {
-        if (ScreenWindow != null && ScreenWindow.IsEnabled)
-        {
-            ScreenWindow.Draw(spriteBatch);
-        }
         foreach (Container container in containers.Where(c => c.IsEnabled))
         {
             container.Draw(spriteBatch);

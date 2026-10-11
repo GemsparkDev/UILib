@@ -22,13 +22,13 @@ public class Button : FunctionalWidget
     public Window Tooltip { get; private set; }
     private Vector2 size;
     public override Vector2 Size => (size != default) ? size : base.Size;
-    public Button(Vector2 _offset, Texture2D _texture)
+    public Button(Vector2 _offset, Texture2D _texture, Container _container, int[] _index) : base(_container, _index)
     {
         offset = _offset;
         Texture = _texture;
         Text = null;
     }
-    public Button(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, string _text, Color _textColor, Texture2D _flipTexture = null)
+    public Button(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, string _text, Color _textColor, Container _container, int[] _index, Texture2D _flipTexture = null) : base(_container, _index)
     {
         offset = _offset;
         Texture = _texture;
@@ -37,7 +37,7 @@ public class Button : FunctionalWidget
         TextColor = _textColor;
         flipTexture = _flipTexture;
     }
-    public Button(Vector2 _offset, SpriteFont _textFont, string _text, Color _textColor, float _textSize)
+    public Button(Vector2 _offset, SpriteFont _textFont, string _text, Color _textColor, float _textSize, Container _container, int[] _index) : base(_container, _index)
     {
         size = _textFont.MeasureString(_text) * new Vector2(1, 0.5f);
         textSize = _textSize;
@@ -84,7 +84,7 @@ public class Button : FunctionalWidget
         {
             return;
         }
-        Tooltip.Position = UIManager.NewPosition + Tooltip.Size / 2 * UIManager.UIScale;
+        Tooltip.Position = container.Manager.NewPosition + Tooltip.Size / 2 * UIManager.UIScale;
         Tooltip.Draw(_spriteBatch);
     }
 }

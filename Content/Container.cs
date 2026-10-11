@@ -3,13 +3,21 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace UILib.Content;
 
-public abstract class Container(Vector2 unitPosition, Texture2D texture)
+public abstract class Container
 {
-    public Vector2 UnitPosition { get; set; } = unitPosition;
+    public Container(Vector2 unitPosition, Texture2D texture, UIManager _manager)
+    {
+        Manager = _manager;
+        UnitPosition = unitPosition;
+        Texture = texture;
+        Manager.AddContainer(this);
+    }
+    public UIManager Manager { get; }
+    public Vector2 UnitPosition { get; set; }
     public Vector2 Position { 
         get => (UnitPosition + Vector2.One) * UIManager.BackBuffer / 2; 
         set => UnitPosition = value * 2 / UIManager.BackBuffer - Vector2.One; } //Using unit position means UI elements scale properly when changing the screen width.
-    public Texture2D Texture { get; set; } = texture;
+    public Texture2D Texture { get; set; }
     public bool IsEnabled { get; set; } = false;
     public float Transparency { get; set; } = 1;
     public virtual Vector2 Size => UIManager.DimsOf(Texture);
@@ -43,7 +51,7 @@ public abstract class Container(Vector2 unitPosition, Texture2D texture)
     public abstract Vector2 WidgetOrigin(Widget _widget);
     public abstract void Update();
     public Vector2 Center => (Origin - Size / 2) * UIManager.UIScale;
-    public virtual bool GetMouseOver() => Position.X <= UIManager.NewPosition.X && UIManager.NewPosition.X <= Position.X + Size.X* UIManager.UIScale && Position.Y <= UIManager.NewPosition.Y && UIManager.NewPosition.Y <= Position.Y + Size.Y* UIManager.UIScale;
+    public virtual bool GetMouseOver() => Position.X <= Manager.NewPosition.X && Manager.NewPosition.X <= Position.X + Size.X* UIManager.UIScale && Position.Y <= Manager.NewPosition.Y && Manager.NewPosition.Y <= Position.Y + Size.Y* UIManager.UIScale;
     public abstract FunctionalWidget GetWidgetOver();
     public virtual void Draw(SpriteBatch spriteBatch)
     {

@@ -5,6 +5,19 @@ namespace UILib.Content;
 
 public abstract class Widget
 {
+    public Widget(Container _container, int[] _index)
+    {
+        container = _container;
+        Register(_index);
+    }
+    public virtual void Register(int[] _index)
+    {
+        foreach (var index in _index)
+        {
+            container.AddWidget(this, index); //Autointialization
+        }
+    }
+    protected readonly Container container;
     public Color color = Color.White;
     protected Vector2 offset;
     public virtual string Text { get; set; }

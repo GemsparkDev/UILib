@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace UILib.Content;
 
-public class Window(Vector2 _unitPosition, Texture2D _texture) : Container(_unitPosition, _texture)
+public class Window(Vector2 _unitPosition, Texture2D _texture, UIManager _manager) : Container(_unitPosition, _texture, _manager)
 {
     private List<Widget> children = [];
     private List<FunctionalWidget> functionalChildren = [];
@@ -14,7 +14,7 @@ public class Window(Vector2 _unitPosition, Texture2D _texture) : Container(_unit
     }
     public override FunctionalWidget GetWidgetOver()
     {
-        Vector2 mp = UIManager.NewPosition - Position + Center;
+        Vector2 mp = Manager.NewPosition - Position + Center;
         float bestDistance = float.MaxValue;
         float currentDistance;
         FunctionalWidget bestWidget = null;
@@ -47,7 +47,7 @@ public class Window(Vector2 _unitPosition, Texture2D _texture) : Container(_unit
     }
     public override bool GetMouseOver()
     {
-        Vector2 mp = UIManager.NewPosition + Center;
+        Vector2 mp = Manager.NewPosition + Center;
         Vector2 hs = Size / 2 * UIManager.UIScale;
         return Position.X - hs.X <= mp.X && mp.X <= Position.X + hs.X && Position.Y - hs.Y <= mp.Y && mp.Y <= Position.Y + hs.Y;
     }

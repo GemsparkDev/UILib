@@ -4,8 +4,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace UILib.Content;
 
-public abstract class FunctionalWidget : Widget
+public abstract class FunctionalWidget(Container _container, int[] _index) : Widget(_container, _index)
 {
+    public override void Register(int[] _index)
+    {
+        foreach (var index in _index)
+        {
+            container.AddWidget(this, index); //Override makes sure functional widgets are recognized
+        }
+    }
     public event InteractHandler RisingInteract;
     public event InteractHandler FallingInteract;
     public event InteractHandler ContinuousInteract;

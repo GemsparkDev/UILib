@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework.Audio;
+using System.Diagnostics;
 
 namespace UILib.Content;
 
@@ -19,7 +20,7 @@ public class TabbedWindow : Container
     public Texture2D tabTexture;
     public Texture2D selectedTabTexture;
     public SoundEffect selectSound;
-    public TabbedWindow(Vector2 _unitPosition, Texture2D _texture, Texture2D _tabTexture, Texture2D _selectedTabTexture, SoundEffect _selectSound, int? _tabs) : base(_unitPosition, _texture)
+    public TabbedWindow(Vector2 _unitPosition, Texture2D _texture, Texture2D _tabTexture, Texture2D _selectedTabTexture, SoundEffect _selectSound, int? _tabs, UIManager _manager) : base(_unitPosition, _texture, _manager)
     {
         tabTexture = _tabTexture;
         selectedTabTexture = _selectedTabTexture;
@@ -55,7 +56,7 @@ public class TabbedWindow : Container
     }
     public override bool GetMouseOver()
     {
-        Vector2 mp = UIManager.NewPosition + Center;
+        Vector2 mp = Manager.NewPosition + Center;
         Vector2 hs = Size / 2 * UIManager.UIScale;
         return Position.X - hs.X <= mp.X && mp.X <= Position.X + hs.X 
              && Position.Y - hs.Y - UIManager.DimsOf(tabTexture).Y * UIManager.UIScale <= mp.Y && mp.Y <= Position.Y + hs.Y;
@@ -81,11 +82,11 @@ public class TabbedWindow : Container
     }
     public override FunctionalWidget GetWidgetOver()
     {
-        Vector2 mp = UIManager.NewPosition - Position + Center;
+        Vector2 mp = Manager.NewPosition - Position + Center;
         float bestDistance = float.MaxValue;
         float currentDistance;
         FunctionalWidget bestWidget = null;
-        if (UIManager.NewInput[0])
+        if (Manager.NewInput[0])
         {
             for (int i = 0; i < totalTabs; i++)
             {
@@ -132,15 +133,15 @@ public class TabbedWindow : Container
         {
             if (i >= tabList.Count)
             {
-                tabList.Add(new Decal(tabOffset, tabTexture));
+                tabList.Add(new Decal(tabOffset, tabTexture, this, []));
             }
             else
             {
-                tabList[i] = new Decal(tabOffset, tabTexture);
+                tabList[i] = new Decal(tabOffset, tabTexture, this, []);
             }
             if (i == currentTab)
             {
-                tabList[i]=new Decal(tabOffset, selectedTabTexture);
+                tabList[i]=new Decal(tabOffset, selectedTabTexture, this, []);
             }
             tabOffset.X += UIManager.DimsOf(tabTexture).X + 4;
         }

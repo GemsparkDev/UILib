@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace UILib.Content;
-public class Screen() : Container(-Vector2.One, null)
+public class Screen(UIManager _manager) : Container(-Vector2.One, null, _manager)
 {
     private List<(Widget widget, Alignment alignment)> children = [];
     private List<(FunctionalWidget widget, Alignment alignment)> functionalChildren = [];
@@ -37,7 +37,7 @@ public class Screen() : Container(-Vector2.One, null)
             Vector2 o = widget.Offset;
             Vector2 hs = widget.Size / 2 * UIManager.UIScale;
             Vector2 center = WidgetOrigin(functionalWidget.widget as Widget, functionalWidget.alignment);
-            var mp = UIManager.NewPosition - Position + center;
+            var mp = Manager.NewPosition - Position + center;
             if (o.X - hs.X <= mp.X && mp.X <= o.X + hs.X &&
                 o.Y - hs.Y <= mp.Y && mp.Y <= o.Y + hs.Y)
             {

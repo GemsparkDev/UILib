@@ -16,7 +16,7 @@ public class Slider : FunctionalWidget
     public Color[] Colors { get; set; }
     private Vector2 size;
     public override Vector2 Size => size != default ? size : base.Size;
-    public Slider(Texture2D _line, Vector2 _offset, Vector2 _sliderSize, bool _visualSlider, Color[] _colors)
+    public Slider(Texture2D _line, Vector2 _offset, Vector2 _sliderSize, bool _visualSlider, Color[] _colors, Container _container, int[] _index) : base(_container, _index)
     {
         Texture = _line;
         knob = null;
@@ -31,7 +31,7 @@ public class Slider : FunctionalWidget
         Colors = _colors;
         Intervals = new float[_colors.Length - 1];
     }
-    public Slider(Texture2D _line, Texture2D _knob, Vector2 _offset, Vector2 _sliderSize, bool _visualSlider, Color[] _colors)
+    public Slider(Texture2D _line, Texture2D _knob, Vector2 _offset, Vector2 _sliderSize, bool _visualSlider, Color[] _colors, Container _container, int[] _index) : base(_container, _index)
     {
         Texture = _line;
         knob = _knob;
