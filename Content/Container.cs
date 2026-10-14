@@ -23,25 +23,25 @@ public abstract class Container
     public virtual Vector2 Size => UIManager.DimsOf(Texture);
     public abstract void AddWidget(Widget widget, int tab = 0);
     public abstract void AddWidget(FunctionalWidget widget, int tab = 0);
-    public Alignment alignment = Alignment.Center;
+    public Alignment Alignment { get; set; } = Alignment.Center;
     protected Vector2 Origin 
     { 
         get 
         {
             var origin = Vector2.Zero;
-            if (alignment is Alignment.Center or Alignment.Top or Alignment.Bottom)
+            if (Alignment is Alignment.Center or Alignment.Top or Alignment.Bottom)
             {
                 origin.X = Size.X / 2;
             }
-            else if (alignment is Alignment.Right or Alignment.TopRight or Alignment.BottomRight)
+            else if (Alignment is Alignment.Right or Alignment.TopRight or Alignment.BottomRight)
             {
                 origin.X = Size.X;
             }
-            if (alignment is Alignment.Center or Alignment.Left or Alignment.Right)
+            if (Alignment is Alignment.Center or Alignment.Left or Alignment.Right)
             {
                 origin.Y = Size.Y / 2;
             }
-            else if (alignment is Alignment.BottomLeft or Alignment.Bottom or Alignment.BottomRight)
+            else if (Alignment is Alignment.BottomLeft or Alignment.Bottom or Alignment.BottomRight)
             {
                 origin.Y = Size.Y;
             }
@@ -64,13 +64,13 @@ public abstract class Container
 }
 public enum Alignment
 {
-    Center = 0,
-    Left = 1,
-    TopLeft = 2,
-    Top = 3,
-    TopRight = 4,
+    TopLeft = 0,
+    Top = 1,
+    TopRight = 2,
+    Left = 3,
+    Center = 4,
     Right = 5,
-    BottomRight = 6,
+    BottomLeft = 6,
     Bottom = 7,
-    BottomLeft = 8,
+    BottomRight = 8,
 }

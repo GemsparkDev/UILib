@@ -55,7 +55,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
         {
             return;
         }
-        Item.Tooltip.Position = container.Manager.NewPosition + Item.Tooltip.Size/2 * UIManager.UIScale;
+        Item.Tooltip.Position = container.Position + new Vector2(0, container.Size.Y * 0.5f + Item.Tooltip.Size.Y / 2 + 2) * UIManager.UIScale;
         Item.Tooltip.Draw(_spriteBatch);
     }
 }

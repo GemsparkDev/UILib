@@ -36,7 +36,7 @@ public class Screen(UIManager _manager) : Container(-Vector2.One, null, _manager
             var widget = functionalWidget.widget;
             Vector2 o = widget.Offset;
             Vector2 hs = widget.Size / 2 * UIManager.UIScale;
-            Vector2 center = WidgetOrigin(functionalWidget.widget as Widget, functionalWidget.alignment);
+            Vector2 center = WidgetOrigin(functionalWidget.widget, functionalWidget.alignment);
             var mp = Manager.NewPosition - Position + center;
             if (o.X - hs.X <= mp.X && mp.X <= o.X + hs.X &&
                 o.Y - hs.Y <= mp.Y && mp.Y <= o.Y + hs.Y)

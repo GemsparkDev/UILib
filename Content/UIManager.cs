@@ -17,8 +17,8 @@ public class UIManager
     public bool[] OldInput { get; private set; } = [false, false];
     private readonly List<Container> containers = [];
     public Container focusedContainer;
-    private FunctionalWidget focusedWidget = null;
-    public bool IsOver => focusedWidget != null;
+    public FunctionalWidget FocusedWidget { get; private set; } = null;
+    public bool IsOver => FocusedWidget != null;
     private static float sfxVolume = 1;
     public static float SFXVolume { get { return sfxVolume; } set { sfxVolume = Math.Clamp(value, 0, 1); } }
     public IData selectedIcon;
@@ -31,31 +31,34 @@ public class UIManager
         NewInput = _newInput;
         //Sets the focused container to be the first container that is enabled and that the mouse is over
         //If there are no available containers, sets to either the screen menu or a dummy window depending on if the screen window is enabled
-        if (focusedWidget == null)
+        if (FocusedWidget == null)
         {
             focusedContainer = containers.Where(c => c.IsEnabled && c.GetMouseOver()).FirstOrDefault();
-            focusedWidget = focusedContainer?.GetWidgetOver();
+            FocusedWidget = focusedContainer?.GetWidgetOver();
         }
-        if (focusedWidget != null)
+        if (FocusedWidget != null)
         {
-            Vector2 clickLocation = 2 * (_newPosition - focusedContainer.Position + focusedContainer.Center - focusedWidget.Offset) / (focusedWidget.Size * UIScale);
+            Vector2 clickLocation = 2 * (_newPosition - focusedContainer.Position + focusedContainer.Center - FocusedWidget.Offset) / (FocusedWidget.Size * UIScale);
             if (OldInput[0] && !_newInput[0])
             {
-                focusedWidget.OnFallingInteract(clickLocation);
+                FocusedWidget.OnFallingInteract(clickLocation);
             }
             if (!OldInput[0] && _newInput[0])
             {
-                focusedWidget.OnRisingInteract(clickLocation);
+                FocusedWidget.OnRisingInteract(clickLocation);
             }
             if (NewInput[0])
             {
-                focusedWidget.OnContinuousInteract(clickLocation);
+                FocusedWidget.OnContinuousInteract(clickLocation);
             }
         }
-        focusedContainer?.Update();
+        foreach(var container in containers)
+        {
+            container.Update();
+        }
         if (!_newInput[0])
         {
-            focusedWidget = null;
+            FocusedWidget = null;
         }
     }
     public bool ToggleToMenu(Container _container)

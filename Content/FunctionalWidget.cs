@@ -22,10 +22,15 @@ public abstract class FunctionalWidget(Container _container, int[] _index) : Wid
     public virtual void OnFallingInteract(Vector2 _clickPosition) => FallingInteract?.Invoke(this, _clickPosition);
     public override void HoveringDraw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center)
     {
+        if(Texture == null)
+        {
+            return;
+        }
+        //_spriteBatch.Draw(Texture, _parentPosition + Offset - _center, null, new Color(2f, 2f, 2f), 0, Size / 2, UIManager.UIScale, 0, 0);
         /*TODO: Figure out outlines
         if (Texture != null)
         {
-            _spriteBatch.Draw(Texture, _parentPosition + Offset - _center + new Vector2(0, UIManager.UIScale), null, Color.Black, 0, Size / 2, UIManager.UIScale, 0, 0);
+
             _spriteBatch.Draw(Texture, _parentPosition + Offset - _center + new Vector2(0, -UIManager.UIScale), null, Color.Black, 0, Size / 2, UIManager.UIScale, 0, 0);
             _spriteBatch.Draw(Texture, _parentPosition + Offset - _center + new Vector2(UIManager.UIScale, 0), null, Color.Black, 0, Size / 2, UIManager.UIScale, 0, 0);
             _spriteBatch.Draw(Texture, _parentPosition + Offset - _center + new Vector2(-UIManager.UIScale, 0), null, Color.Black, 0, Size / 2, UIManager.UIScale, 0, 0);
