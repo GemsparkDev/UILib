@@ -16,9 +16,10 @@ public class Button : FunctionalWidget
             text = value;
             if (Texture == null)
             {
-                size = textFont.MeasureString(text) * new Vector2(1, 0.5f);
+                size = textFont.MeasureString(text) * textSize / 10;
             }
-        } }
+        } 
+    }
     public Window Tooltip { get; private set; }
     private Vector2 size;
     public override Vector2 Size => (size != default) ? size : base.Size;
@@ -39,7 +40,6 @@ public class Button : FunctionalWidget
     }
     public Button(Vector2 _offset, SpriteFont _textFont, string _text, Color _textColor, float _textSize, Container _container, int[] _index) : base(_container, _index)
     {
-        size = _textFont.MeasureString(_text) * new Vector2(1, 0.5f);
         textSize = _textSize;
         offset = _offset;
         textFont = _textFont;
