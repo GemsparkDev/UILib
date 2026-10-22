@@ -25,17 +25,17 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
     }
     public override void OnRisingInteract(Vector2 clickPosition)
     {
-        if (container.Manager.selectedIcon == null)
+        if (Container.Manager.selectedIcon == null)
         {
-            (Item, container.Manager.selectedIcon) = (null, Item);
+            (Item, Container.Manager.selectedIcon) = (null, Item);
         }
-        else if(ids == null || ids.Contains(container.Manager.selectedIcon.ID))
+        else if(ids == null || ids.Contains(Container.Manager.selectedIcon.ID))
         {
-            if (container.Manager.selectedIcon as T == null)
+            if (Container.Manager.selectedIcon as T == null)
             {
                 return;
             }
-            (Item, container.Manager.selectedIcon) = ((T)container.Manager.selectedIcon, Item);
+            (Item, Container.Manager.selectedIcon) = ((T)Container.Manager.selectedIcon, Item);
         }
         base.OnRisingInteract(clickPosition);
     }
@@ -55,7 +55,7 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
         {
             return;
         }
-        Item.Tooltip.Position = container.Position + new Vector2(0, container.Size.Y * 0.5f + Item.Tooltip.Size.Y / 2 + 2) * UIManager.UIScale;
+        Item.Tooltip.Position = Container.Position + new Vector2(0, Container.Size.Y * 0.5f + Item.Tooltip.Size.Y / 2 + 2) * UIManager.UIScale;
         Item.Tooltip.Draw(_spriteBatch);
     }
 }

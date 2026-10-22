@@ -45,7 +45,7 @@ public class Window(Vector2 _unitPosition, Texture2D _texture, UIManager _manage
             child.Update();
         }
     }
-    public override bool GetMouseOver()
+    public override bool IsMouseOver()
     {
         Vector2 mp = Manager.NewPosition + Center;
         Vector2 hs = Size / 2 * UIManager.UIScale;

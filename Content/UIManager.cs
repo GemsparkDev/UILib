@@ -1,9 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
-using System.Diagnostics;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace UILib.Content;
 public class UIManager
@@ -16,7 +15,7 @@ public class UIManager
     public bool[] NewInput { get; private set; } = [false, false];
     public bool[] OldInput { get; private set; } = [false, false];
     private readonly List<Container> containers = [];
-    public Container focusedContainer;
+    public Container FocusedContainer { get; set; }
     public FunctionalWidget FocusedWidget { get; private set; } = null;
     public bool IsOver => FocusedWidget != null;
     private static float sfxVolume = 1;
@@ -33,12 +32,12 @@ public class UIManager
         //If there are no available containers, sets to either the screen menu or a dummy window depending on if the screen window is enabled
         if (FocusedWidget == null)
         {
-            focusedContainer = containers.Where(c => c.IsEnabled && c.GetMouseOver()).FirstOrDefault();
-            FocusedWidget = focusedContainer?.GetWidgetOver();
+            FocusedContainer = containers.Where(c => c.IsEnabled && c.IsMouseOver()).FirstOrDefault();
+            FocusedWidget = FocusedContainer?.GetWidgetOver();
         }
         if (FocusedWidget != null)
         {
-            Vector2 clickLocation = 2 * (_newPosition - focusedContainer.Position + focusedContainer.Center - FocusedWidget.Offset) / (FocusedWidget.Size * UIScale);
+            Vector2 clickLocation = 2 * (_newPosition - FocusedContainer.Position + FocusedContainer.Center - FocusedWidget.Offset) / (FocusedWidget.Size * UIScale);
             if (OldInput[0] && !_newInput[0])
             {
                 FocusedWidget.OnFallingInteract(clickLocation);

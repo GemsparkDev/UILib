@@ -51,7 +51,7 @@ public class Screen(UIManager _manager) : Container(-Vector2.One, null, _manager
         }
         return bestWidget;
     }
-    public override bool GetMouseOver() => GetWidgetOver() != null;
+    public override bool IsMouseOver() => GetWidgetOver() != null;
     public override void Update()
     {
         foreach (var child in children)

@@ -84,7 +84,7 @@ public class Button : FunctionalWidget
         {
             return;
         }
-        Tooltip.Position = container.Manager.NewPosition + Tooltip.Size / 2 * UIManager.UIScale;
+        Tooltip.Position = Container.Manager.NewPosition + Tooltip.Size / 2 * UIManager.UIScale;
         Tooltip.Draw(_spriteBatch);
     }
 }

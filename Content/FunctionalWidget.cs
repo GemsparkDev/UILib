@@ -10,7 +10,7 @@ public abstract class FunctionalWidget(Container _container, int[] _index) : Wid
     {
         foreach (var index in _index)
         {
-            container.AddWidget(this, index); //Override makes sure functional widgets are recognized
+            Container.AddWidget(this, index); //Override makes sure functional widgets are recognized
         }
     }
     public event InteractHandler RisingInteract;

@@ -9,32 +9,75 @@ using Microsoft.Xna.Framework.Graphics;
 namespace UILib.Content;
 public class RenderContainer : Container
 {
-    public RenderContainer(Vector2 unitPosition, Texture2D texture, UIManager _manager) : base(unitPosition, texture, _manager)
+    private GraphicsDevice device;
+    private FunctionalWidget interfaceWidget;
+    RenderTarget2D renderBefore, renderAfter;
+    public RenderContainer(UIManager _manager, FunctionalWidget _interface, GraphicsDevice _device, RenderTarget2D _renderBefore, RenderTarget2D _renderAfter) 
+        : base(new Vector2(-1, -1), null, _manager)
     {
-    }
+        interfaceWidget = _interface;
+        device = _device;
+        renderBefore = _renderBefore;
+        renderAfter = _renderAfter;
 
-    public override void AddWidget(Widget widget, int tab = 0)
+        interfaceWidget.RisingInteract += delegate(Vector2 _clickPosition) { GetWidgetOver(_clickPosition).RisingInteract(); };
+    }
+    private List<Widget> children = [];
+    private List<FunctionalWidget> functionalChildren = [];
+    public Vector2 MousePosition { get; set; }
+    public override Vector2 WidgetOrigin(Widget _widget) => Position - Origin + Size / 2;
+    public FunctionalWidget GetWidgetOver(Vector2 mp)
     {
-        throw new NotImplementedException();
+        float bestDistance = float.MaxValue;
+        float currentDistance;
+        FunctionalWidget bestWidget = null;
+        foreach (FunctionalWidget widget in functionalChildren)
+        {
+            Vector2 hs = widget.Size / 2 * UIManager.UIScale;
+            if (widget.Offset.X - hs.X <= mp.X && mp.X <= widget.Offset.X + hs.X &&
+                widget.Offset.Y - hs.Y <= mp.Y && mp.Y <= widget.Offset.Y + hs.Y)
+            {
+                currentDistance = Vector2.DistanceSquared(widget.Size / 2 * UIManager.UIScale + widget.Offset, mp);
+                if (currentDistance < bestDistance)
+                {
+                    bestDistance = currentDistance;
+                    bestWidget = widget;
+                }
+            }
+        }
+        return bestWidget;
     }
-
-    public override void AddWidget(FunctionalWidget widget, int tab = 0)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override FunctionalWidget GetWidgetOver()
-    {
-        throw new NotImplementedException();
-    }
-
     public override void Update()
     {
-        throw new NotImplementedException();
+        foreach (var child in children)
+        {
+            child.Update();
+        }
+        foreach (var child in functionalChildren)
+        {
+            child.Update();
+        }
     }
-
-    public override Vector2 WidgetOrigin(Widget _widget)
+    public override FunctionalWidget GetWidgetOver() => null;
+    public override bool IsMouseOver() => false;
+    public override void Draw(SpriteBatch _spriteBatch)
     {
-        throw new NotImplementedException();
+        device.SetRenderTarget(renderBefore);
+        base.Draw(_spriteBatch);
+        foreach (var widget in children)
+        {
+            widget.Draw(_spriteBatch, Position, Transparency, Center);
+        }
+        foreach (var functionalWidget in functionalChildren)
+        {
+            if (functionalWidget is Widget widget)
+            {
+                widget.Draw(_spriteBatch, Position, Transparency, Center);
+            }
+        }
+        GetWidgetOver()?.HoveringDraw(_spriteBatch, Position, Transparency, Center);
+        device.SetRenderTarget(renderAfter);
     }
+    public override void AddWidget(Widget widget, int index = 0) => children.Add(widget);
+    public override void AddWidget(FunctionalWidget widget, int index = 0) => functionalChildren.Add(widget);
 }

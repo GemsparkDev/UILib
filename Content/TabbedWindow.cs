@@ -54,7 +54,7 @@ public class TabbedWindow : Container
     {
         return (from val in functionalChildren where val.tab == tab select val.widget).ToList()[index];
     }
-    public override bool GetMouseOver()
+    public override bool IsMouseOver()
     {
         Vector2 mp = Manager.NewPosition + Center;
         Vector2 hs = Size / 2 * UIManager.UIScale;

@@ -51,7 +51,7 @@ public abstract class Container
     public abstract Vector2 WidgetOrigin(Widget _widget);
     public abstract void Update();
     public Vector2 Center => (Origin - Size / 2) * UIManager.UIScale;
-    public virtual bool GetMouseOver() => Position.X <= Manager.NewPosition.X && Manager.NewPosition.X <= Position.X + Size.X* UIManager.UIScale && Position.Y <= Manager.NewPosition.Y && Manager.NewPosition.Y <= Position.Y + Size.Y* UIManager.UIScale;
+    public virtual bool IsMouseOver() => Position.X <= Manager.NewPosition.X && Manager.NewPosition.X <= Position.X + Size.X* UIManager.UIScale && Position.Y <= Manager.NewPosition.Y && Manager.NewPosition.Y <= Position.Y + Size.Y* UIManager.UIScale;
     public abstract FunctionalWidget GetWidgetOver();
     public virtual void Draw(SpriteBatch spriteBatch)
     {
