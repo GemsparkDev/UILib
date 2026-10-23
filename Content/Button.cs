@@ -23,25 +23,22 @@ public class Button : FunctionalWidget
     public Window Tooltip { get; private set; }
     private Vector2 size;
     public override Vector2 Size => (size != default) ? size : base.Size;
-    public Button(Vector2 _offset, Texture2D _texture, Container _container, int[] _index) : base(_container, _index)
+    public Button(Vector2 _offset, Texture2D _texture, Container _container, int[] _index) : base(_offset, _container, _index)
     {
-        offset = _offset;
         Texture = _texture;
         Text = null;
     }
-    public Button(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, string _text, Color _textColor, Container _container, int[] _index, Texture2D _flipTexture = null) : base(_container, _index)
+    public Button(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, string _text, Color _textColor, Container _container, int[] _index, Texture2D _flipTexture = null) : base(_offset, _container, _index)
     {
-        offset = _offset;
         Texture = _texture;
         textFont = _textFont;
         Text = _text;
         TextColor = _textColor;
         flipTexture = _flipTexture;
     }
-    public Button(Vector2 _offset, SpriteFont _textFont, string _text, Color _textColor, float _textSize, Container _container, int[] _index) : base(_container, _index)
+    public Button(Vector2 _offset, SpriteFont _textFont, string _text, Color _textColor, float _textSize, Container _container, int[] _index) : base(_offset, _container, _index)
     {
         textSize = _textSize;
-        offset = _offset;
         textFont = _textFont;
         Texture = null;
         Text = _text;

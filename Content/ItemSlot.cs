@@ -8,19 +8,17 @@ public class ItemSlot<T> : FunctionalWidget where T : class, IData
 {
     public T Item { get; set; } = default;
     public readonly List<int> ids;
-    public ItemSlot(Vector2 _offset, Texture2D _texture, int _id, Container _container, int[] _index) : base(_container, _index)
+    public ItemSlot(Vector2 _offset, Texture2D _texture, int _id, Container _container, int[] _index) : base(_offset, _container, _index)
     {
         Texture = _texture;
-        offset = _offset;
         if(_id != -1)
         {
             ids = [_id];
         }
     }
-    public ItemSlot(Vector2 _offset, Texture2D _texture, List<int> _ids, Container _container, int[] _index) : base(_container, _index)
+    public ItemSlot(Vector2 _offset, Texture2D _texture, List<int> _ids, Container _container, int[] _index) : base(_offset, _container, _index)
     {
         Texture = _texture;
-        offset = _offset;
         ids = _ids;
     }
     public override void OnRisingInteract(Vector2 clickPosition)

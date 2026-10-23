@@ -15,9 +15,8 @@ public class Textbox : FunctionalWidget
     public Color textColor = Color.White;
     private bool isActive;
     Keys[] prevState = [];
-    public Textbox(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, Container _container, int[] _index) : base(_container, _index)
+    public Textbox(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, Container _container, int[] _index) : base(_offset, _container, _index)
     {
-        offset = _offset;
         Texture = _texture;
         textFont = _textFont;
         Text = "";

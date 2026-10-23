@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace UILib.Content;
 public class UIManager
@@ -95,7 +96,7 @@ public class UIManager
     public void Draw(SpriteBatch spriteBatch)
     {
         foreach (Container container in containers.Where(c => c.IsEnabled))
-        {
+        {  
             container.Draw(spriteBatch);
         }
         if (selectedIcon != null && selectedIcon.Texture != null)

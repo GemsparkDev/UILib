@@ -11,9 +11,8 @@ public class Decal : Widget
     public Color textColor;
     private Vector2 size = Vector2.Zero;
     public override Vector2 Size => (size == Vector2.Zero && Texture != null) ? UIManager.DimsOf(Texture) : size;
-    public Decal(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, string _text, Color _textColor, float _textSize, Container _container, int[] _index) : base(_container, _index)
+    public Decal(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, string _text, Color _textColor, float _textSize, Container _container, int[] _index) : base(_offset, _container, _index)
     {
-        offset = _offset;
         Texture = _texture;
         textFont = _textFont;
         Text = _text;
@@ -21,18 +20,16 @@ public class Decal : Widget
         textSize = _textSize;
         size = UIManager.DimsOf(_texture);
     }
-    public Decal(Vector2 _offset, Texture2D _texture, Container _container, int[] _index) : base(_container, _index)
+    public Decal(Vector2 _offset, Texture2D _texture, Container _container, int[] _index) : base(_offset, _container, _index)
     {
-        offset = _offset;
         Texture = _texture;
         Text = null;
         textColor = Color.White;
         size = UIManager.DimsOf(_texture);
     }
-    public Decal(Vector2 _offset, SpriteFont _textFont, string _text, Color _textColor, float _textSize, Container _container, int[] _index) : base(_container, _index)
+    public Decal(Vector2 _offset, SpriteFont _textFont, string _text, Color _textColor, float _textSize, Container _container, int[] _index) : base(_offset, _container, _index)
     {
         size = _textFont.MeasureString(_text) * new Vector2(1, 0.5f);
-        offset = _offset;
         Texture = null;
         textFont = _textFont;
         Text = _text;

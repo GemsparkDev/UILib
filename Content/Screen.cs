@@ -54,13 +54,13 @@ public class Screen(UIManager _manager) : Container(-Vector2.One, null, _manager
     public override bool IsMouseOver() => GetWidgetOver() != null;
     public override void Update()
     {
-        foreach (var child in children)
+        foreach (var (widget, _) in children)
         {
-            child.widget.Update();
+            widget.Update();
         }
-        foreach (var child in functionalChildren)
+        foreach (var (widget, _) in functionalChildren)
         {
-            child.widget.Update();
+            widget.Update();
         }
     }
     public override void Draw(SpriteBatch spriteBatch)

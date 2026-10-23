@@ -5,10 +5,11 @@ namespace UILib.Content;
 
 public abstract class Widget
 {
-    public Widget(Container _container, int[] _index)
+    public Widget(Vector2 _offset, Container _container, int[] _index)
     {
         Container = _container;
         Register(_index);
+        offset = _offset;
     }
     public virtual void Register(int[] _index)
     {
@@ -19,7 +20,7 @@ public abstract class Widget
     }
     public Container Container { get; protected set; }
     public Color color = Color.White;
-    protected Vector2 offset;
+    private Vector2 offset;
     public virtual string Text { get; set; }
     public Texture2D Texture { get; set; }
     public Vector2 Offset => offset * UIManager.UIScale;

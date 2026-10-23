@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace UILib.Content;
 
-public abstract class FunctionalWidget(Container _container, int[] _index) : Widget(_container, _index)
+public class FunctionalWidget(Vector2 _offset, Container _container, int[] _index) : Widget(_offset, _container, _index)
 {
     public override void Register(int[] _index)
     {
