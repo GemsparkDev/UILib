@@ -75,7 +75,7 @@ public class Slider : FunctionalWidget
         if (!(visualSlider || knob == null))
         {
             Vector2 knobPosition = _parentPosition + Offset - sliderSize / 2 * UIManager.UIScale + new Vector2((int)(sliderSize.X * Intervals[0]), (int)(sliderSize.Y / 2)) * UIManager.UIScale - _center;
-            _spriteBatch.Draw(knob, knobPosition, null, Color.White, 0, UIManager.DimsOf(knob) / 2, UIManager.UIScale / 2, 0, 0);
+            _spriteBatch.Draw(knob, knobPosition, null, Color.White, 0, UIManager.DimsOf(knob) / 2, UIManager.UIScale, 0, 0);
         }
     }
     public override void HoveringDraw(SpriteBatch _spriteBatch, Vector2 _parentPosition, float _transparency, Vector2 _center) { }
