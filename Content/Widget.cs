@@ -23,10 +23,10 @@ public abstract class Widget
     private Vector2 offset;
     public virtual string Text { get; set; }
     public Texture2D Texture { get; set; }
-    public Vector2 Offset => (offset) * UIManager.UIScale + Center;
+    public Vector2 Offset => offset * UIManager.UIScale + Center;
     public virtual Vector2 Size => Texture != null ? UIManager.DimsOf(Texture) : Vector2.Zero;
     public Alignment WidgetAlignment { get; set; } = Alignment.Center;
-    public Vector2 Center
+    public virtual Vector2 Center
     { 
         get 
         {

@@ -9,8 +9,31 @@ public class Decal : Widget
     private SpriteFont textFont;
     private float textSize = 10f;
     public Color textColor;
-    private Vector2 size = Vector2.Zero;
-    public override Vector2 Size => (size == Vector2.Zero && Texture != null) ? UIManager.DimsOf(Texture) : size;
+    public override Vector2 Size => ((Texture != null) ? UIManager.DimsOf(Texture) : textFont.MeasureString(Text) * new Vector2(1.1f, 0.5f));
+    public override Vector2 Center
+    {
+        get
+        {
+            var o = Size / 2;
+            if (WidgetAlignment is Alignment.Center or Alignment.Top or Alignment.Bottom)
+            {
+                o.X -= Size.X / 2;
+            }
+            else if (WidgetAlignment is Alignment.Right or Alignment.TopRight or Alignment.BottomRight)
+            {
+                o.X -= Size.X;
+            }
+            if (WidgetAlignment is Alignment.Center or Alignment.Left or Alignment.Right)
+            {
+                o.Y -= Size.Y / 2;
+            }
+            else if (WidgetAlignment is Alignment.BottomLeft or Alignment.Bottom or Alignment.BottomRight)
+            {
+                o.Y -= Size.Y;
+            }
+            return o;
+        }
+    }
     public Decal(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, string _text, Color _textColor, float _textSize, Container _container, int[] _index) : base(_offset, _container, _index)
     {
         Texture = _texture;
@@ -18,18 +41,15 @@ public class Decal : Widget
         Text = _text;
         textColor = _textColor;
         textSize = _textSize;
-        size = UIManager.DimsOf(_texture);
     }
     public Decal(Vector2 _offset, Texture2D _texture, Container _container, int[] _index) : base(_offset, _container, _index)
     {
         Texture = _texture;
         Text = null;
         textColor = Color.White;
-        size = UIManager.DimsOf(_texture);
     }
     public Decal(Vector2 _offset, SpriteFont _textFont, string _text, Color _textColor, float _textSize, Container _container, int[] _index) : base(_offset, _container, _index)
     {
-        size = _textFont.MeasureString(_text) * new Vector2(1, 0.5f);
         Texture = null;
         textFont = _textFont;
         Text = _text;
