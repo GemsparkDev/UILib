@@ -9,7 +9,21 @@ public class Decal : Widget
     private SpriteFont textFont;
     private float textSize = 10f;
     public Color textColor;
-    public override Vector2 Size => ((Texture != null) ? UIManager.DimsOf(Texture) : textFont.MeasureString(Text) * new Vector2(1.1f, 0.5f));
+    public override Vector2 Size 
+    { 
+        get 
+        {
+            if (Texture != null)
+            {
+                return UIManager.DimsOf(Texture);
+            }
+            if (textFont != null && Text != null)
+            {
+                return textFont.MeasureString(Text) * new Vector2(1.1f, 0.5f);
+            }
+            return Vector2.Zero;
+        } 
+    }
     public override Vector2 Center
     {
         get

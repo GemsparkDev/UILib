@@ -29,8 +29,9 @@ public class Button : FunctionalWidget
         flipTexture = _flipTexture;
         Text = null;
     }
-    public Button(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, string _text, Color _textColor, Container _container, int[] _index, Texture2D _flipTexture = null) : base(_offset, _container, _index)
+    public Button(Vector2 _offset, Texture2D _texture, SpriteFont _textFont, string _text, Color _textColor, float _textSize, Container _container, int[] _index, Texture2D _flipTexture = null) : base(_offset, _container, _index)
     {
+        textSize = _textSize;
         Texture = _texture;
         textFont = _textFont;
         Text = _text;
@@ -67,11 +68,11 @@ public class Button : FunctionalWidget
         if (Text != null)
         {
             Vector2 textMiddlePoint = textFont.MeasureString(Text ) / 2;
-            float textSize = Size.X/(Text.Length * 10);
-            if(textSize > 1)
-            {
-                textSize = 1;
-            }
+            //float textSize = Size.X/(Text.Length * 10);
+            //if(textSize > 1)
+            //{
+            //    textSize = 1;
+            //} TODO: Should this be a toggle?
             _spriteBatch.DrawString(textFont, Text, _parentPosition + Offset - _center, TextColor, 0, textMiddlePoint, textSize * UIManager.UIScale * this.textSize / 10, 0, 0);
         }
     }
