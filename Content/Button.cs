@@ -10,6 +10,7 @@ public class Button : FunctionalWidget
     private float textSize = 10f;
     private Texture2D flipTexture;
     private string text = "";
+    public bool IsSwitch { get; set; } = true;
     public override string Text { get => text; 
         set 
         {
@@ -46,9 +47,10 @@ public class Button : FunctionalWidget
         Text = _text;
         TextColor = _textColor;
     }
-    private void Flip()
+    public override void OnFallingInteract(Vector2 _clickPosition)
     {
-        if (flipTexture != null)
+        base.OnFallingInteract(_clickPosition);
+        if (!IsSwitch && flipTexture != null)
         {
             (Texture, flipTexture) = (flipTexture, Texture);
         }
@@ -56,7 +58,10 @@ public class Button : FunctionalWidget
     public override void OnRisingInteract(Vector2 parentPosition)
     {
         base.OnRisingInteract(parentPosition);
-        Flip();
+        if (flipTexture != null)
+        {
+            (Texture, flipTexture) = (flipTexture, Texture);
+        }
     }
     public void AddTooltip(Window _tooltip)
     {
