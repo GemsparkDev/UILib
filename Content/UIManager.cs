@@ -34,7 +34,10 @@ public class UIManager
         if (FocusedWidget == null)
         {
             FocusedContainer = containers.Where(c => c.IsEnabled && c.IsMouseOver()).FirstOrDefault();
-            FocusedWidget = FocusedContainer?.GetWidgetOver();
+            if(NewInput[0] && !OldInput[0])
+            {
+                FocusedWidget = FocusedContainer?.GetWidgetOver();
+            }
         }
         if (FocusedWidget != null)
         {
